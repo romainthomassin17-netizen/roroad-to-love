@@ -2595,101 +2595,44 @@
 
     </script>
 <script type="module">
-  // --- Variable globale ---
-  let globalState = {};
-  window.globalState = globalState;
+  // =====================================
+  // IMPORT DU SYSTÈME DE SAUVEGARDE
+  // =====================================
+  
+  import { enableAutoSave } from './firebase-autosave.js';
 
-  // --- Import Firebase ---
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  // =====================================
+  // RÉCUPÉRATION DE L'ÉTAT GLOBAL
+  // =====================================
+  
+  let globalState = window.globalState || {};
 
-  // --- Configuration Firebase ---
-  const firebaseConfig = {
-    apiKey: "AIzaSyAQOpAvX7SQXVxYbxN5jNd9BH5uYoGnyDM",
-    authDomain: "roroad-to-love.firebaseapp.com",
-    projectId: "roroad-to-love",
-    storageBucket: "roroad-to-love.firebasestorage.app",
-    messagingSenderId: "770468867129",
-    appId: "1:770468867129:web:8f6709b7205232d4d871e8"
-  };
+  // =====================================
+  // ACTIVATION DE LA SAUVEGARDE AUTO
+  // =====================================
+  
+  console.log('🔧 Activation de la sauvegarde automatique...');
 
-  // --- Initialisation ---
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  // --- Identifiant partagé ---
-  const SHARED_DOC_ID = "perla_roro";
-
-  // --- Chargement en ligne ---
-  async function loadGameOnline() {
-    try {
-      const docRef = doc(db, "RoroadToLove", SHARED_DOC_ID);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        globalState = docSnap.data();
-        window.globalState = globalState;
-
-        // Active la surveillance automatique après le chargement
-        globalState = watchState(globalState);
-        window.globalState = globalState;
-
-        console.log("💞 Progression restaurée depuis le cloud !");
-        console.log("✅ Données chargées :", globalState);
-      } else {
-        console.warn("⚠️ Aucune sauvegarde trouvée (premier lancement).");
-      }
-    } catch (error) {
-      console.error("Erreur de chargement :", error);
+  enableAutoSave(globalState).then(proxiedState => {
+    window.globalState = proxiedState;
+    
+    if (window.globalState.currentPlayer) {
+      window.activePlayerState = window.globalState.players[window.globalState.currentPlayer];
     }
-  }
-
-  // --- Connexion Firebase ---
-  signInAnonymously(auth).catch(console.error);
-
-  // --- Quand connecté, charger la progression ---
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) return;
-    console.log("Connecté à Firebase ✅", user.uid);
-    await loadGameOnline();
-    if (typeof renderAppFromState === "function") renderAppFromState();
+    
+    if (typeof window.updateHomeUI === 'function') {
+      window.updateHomeUI();
+    }
+    
+    console.log('✅ Application prête avec sauvegarde automatique !');
+  }).catch(error => {
+    console.error('❌ Erreur lors de l\'activation de la sauvegarde:', error);
+    alert('⚠️ La sauvegarde automatique n\'a pas pu être activée.');
   });
-
-  // --- Fonction de sauvegarde en ligne ---
-  async function saveGameOnline() {
-    try {
-      const ref = doc(db, "RoroadToLove", SHARED_DOC_ID);
-      await setDoc(ref, globalState);
-      console.log("🌸 Sauvegarde en ligne réussie !");
-    } catch (e) {
-      console.error("Erreur de sauvegarde :", e);
-    }
-  }
-
-  // --- Sauvegarde automatique de tout changement du globalState ---
-  function watchState(state) {
-    return new Proxy(state, {
-      set(target, key, value) {
-        target[key] = value;
-        console.log(`💾 Changement détecté : ${key} =`, value);
-        saveGameOnline(); // auto-save dès qu’on modifie le state
-        return true;
-      }
-    });
-  }
-
-  // --- Applique la surveillance au démarrage ---
-  globalState = watchState(globalState);
-  window.globalState = globalState;
-
-  // Rendre disponible la fonction de rechargement
-  window.loadGameOnline = loadGameOnline;
 </script>
-
 </body>
 </html>
+
 
 
 
