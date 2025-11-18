@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roroad to Love 🌹</title>
+    <!-- Chargement de TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement de Tone.js pour les sons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <!-- Polices poétiques -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Définition des polices et des couleurs de base */
+        body {
+            font-family: 'Lora', serif;
+            background-color: #FFFBF7; /* Blanc cassé */
+            color: #4A2B2B; /* Brun rosé foncé pour le texte */
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Couleurs personnalisées Tailwind */
+        .bg-base { background-color: #FFFBF7; } /* Blanc cassé */
+        .bg-primary { background-color: #FADADD; } /* Rose pastel */
+        .bg-secondary { background-color: #F3E5AB; } /* Doré doux */
+        .text-accent { color: #D4AF37; } /* Or */
+        .border-accent { border-color: #F3E5AB; } /* Doré doux */
+        .btn-primary {
+            background-color: #FADADD; /* Rose pastel */
+            color: #8B4513; /* Brun */
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #F4C2C2; /* Rose plus soutenu */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .btn-primary:disabled {
+            background-color: #FCEEED;
+            color: #D1B6B6;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background-color: #F3E5AB; /* Doré */
+            color: #8B4513; /* Brun */
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #E9D793;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .btn-secondary:disabled {
+            background-color: #F9F3DE;
+            color: #C9BFA0;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* --- NOUVEAUX THÈMES --- */
+        
+        /* Thème Romain (Bleu) - MODIFIÉ */
+        .theme-romain .bg-primary { background-color: #D6EAF8; } /* Bleu pastel */
+        .theme-romain .btn-primary {
+            background-color: #D6EAF8; /* Bleu pastel */
+            color: #1A5276; /* Bleu foncé */
+        }
+        .theme-romain .btn-primary:hover:not(:disabled) {
+            background-color: #AED6F1; /* Bleu plus soutenu */
+        }
+        .theme-romain .btn-primary:disabled {
+            background-color: #EBF5FB;
+            color: #A9CCE3;
+        }
+        .theme-romain .text-rose-800 { color: #1A5276; }
+        .theme-romain .text-rose-900 { color: #154360; }
+        .theme-romain .border-rose-100 { border-color: #D6EAF8; }
+        .theme-romain .border-rose-200 { border-color: #AED6F1; }
+        .theme-romain .border-rose-300 { border-color: #85C1E9; }
+        .theme-romain .bg-rose-50 { background-color: #EBF5FB; }
+        .theme-romain .bg-rose-100 { background-color: #D6EAF8; }
+        .theme-romain .hover\:bg-rose-100:hover { background-color: #D6EAF8; }
+        .theme-romain .hover\:bg-rose-50:hover { background-color: #EBF5FB; }
+        .theme-romain .hover\:bg-rose-200:hover { background-color: #AED6F1; }
+        .theme-romain .text-rose-700 { color: #1A5276; }
+        .theme-romain .text-rose-600 { color: #1F618D; }
+        .theme-romain .text-rose-500 { color: #2471A3; }
+        .theme-romain .bg-rose-200 { background-color: #AED6F1; }
+        .theme-romain .from-rose-300 { --tw-gradient-from: #AED6F1 var(--tw-gradient-from-position); }
+        .theme-romain .from-rose-200 { --tw-gradient-from: #D6EAF8 var(--tw-gradient-from-position); }
+
+        /* Thème Perla (Rose) - par défaut, mais forcé pour être sûr */
+        .theme-perla .bg-primary { background-color: #FADADD; }
+        .theme-perla .btn-primary { background-color: #FADADD; color: #8B4513; }
+        .theme-perla .btn-primary:hover:not(:disabled) { background-color: #F4C2C2; }
+        .theme-perla .btn-primary:disabled { background-color: #FCEEED; color: #D1B6B6; }
+        .theme-perla .text-rose-800 { color: #9F1239; } /* Utilisation des couleurs tailwind pour rose */
+        .theme-perla .text-rose-900 { color: #881337; }
+        .theme-perla .border-rose-100 { border-color: #FFE4E6; }
+        .theme-perla .border-rose-200 { border-color: #FECDD3; }
+        .theme-perla .border-rose-300 { border-color: #FDA4AF; }
+        .theme-perla .bg-rose-50 { background-color: #FFF1F2; }
+        .theme-perla .bg-rose-100 { background-color: #FFE4E6; }
+        .theme-perla .hover\:bg-rose-100:hover { background-color: #FFE4E6; }
+        .theme-perla .hover\:bg-rose-50:hover { background-color: #FFF1F2; }
+        .theme-perla .hover\:bg-rose-200:hover { background-color: #FECDD3; }
+        .theme-perla .text-rose-700 { color: #BE123C; }
+        .theme-perla .text-rose-600 { color: #E11D48; }
+        .theme-perla .text-rose-500 { color: #F43F5E; }
+        .theme-perla .bg-rose-200 { background-color: #FECDD3; }
+        .theme-perla .from-rose-300 { --tw-gradient-from: #FDA4AF var(--tw-gradient-from-position); }
+        .theme-perla .from-rose-200 { --tw-gradient-from: #FECDD3 var(--tw-gradient-from-position); }
+
+        /* Masquer la scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* --- Styles pour la Roue --- */
+        .wheel-container {
+            width: 100%;
+            height: 100px; /* Hauteur d'un item */
+            overflow: hidden;
+            position: relative;
+            border-radius: 12px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.8));
+            border: 2px solid var(--border-color, #FFE4E6); /* Couleur par défaut */
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .theme-romain .wheel-container { --border-color: #D6EAF8; }
+        .theme-perla .wheel-container { --border-color: #FFE4E6; }
+        
+        .wheel-marker {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 50px; /* Hauteur de l'item central */
+            transform: translateY(-50%);
+            border-top: 2px dashed var(--marker-color, #F43F5E);
+            border-bottom: 2px dashed var(--marker-color, #F43F5E);
+            z-index: 10;
+        }
+        .theme-romain .wheel-marker { --marker-color: #2471A3; }
+        .theme-perla .wheel-marker { --marker-color: #F43F5E; }
+
+        .wheel-inner {
+            transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            z-index: 5;
+        }
+        .wheel-item {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem; /* 24px */
+            font-weight: bold;
+        }
+        
+        /* NOUVEAU: Animation de cœur qui bat */
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .heart-beat {
+            animation: beat 1.5s infinite ease-in-out;
+        }
+
+        /* NOUVEAU: Animation "flashy" dorée */
+        @keyframes gold-pulse {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(233, 180, 16, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 6px 20px rgba(233, 180, 16, 0.7);
+                transform: scale(1.03);
+            }
+        }
+        .btn-gold-flashy {
+            /* Dégradé doré brillant */
+            background: linear-gradient(180deg, #FDEE8A 0%, #F3E5AB 40%, #E9B410 100%);
+            color: #6D4C41; /* Brun foncé pour le texte */
+            border: 2px solid #E6A900;
+            transition: all 0.3s ease;
+            /* Animation "flashy" */
+            animation: gold-pulse 2.5s infinite ease-in-out;
+        }
+        .btn-gold-flashy:hover:not(:disabled) {
+            transform: scale(1.05) translateY(-2px); /* Effet de survol plus prononcé */
+            box-shadow: 0 6px 20px rgba(233, 180, 16, 0.7);
+        }
+    </style>
+</head>
+
+<body class="bg-base">
+
+    <!-- Conteneur principal de l'application (format mobile) -->
+    <div class="max-w-md mx-auto min-h-screen shadow-2xl bg-white overflow-hidden">
+        
+        <!-- Conteneur pour les différentes vues -->
+        <div id="app-container" class="relative w-full h-full">
+
+            <!-- ======================================= -->
+            <!--            Vue 0: LOGIN                 -->
+            <!-- ======================================= -->
+            <!-- CORRECTION: Attribut `class.bind` invalide retiré -->
+            <div id="view-login" class="p-6 pt-20 h-screen flex flex-col justify-center text-center">
+                <h1 class="font-display text-4xl font-bold text-rose-800">Roroad to Love</h1>
+                <p class="mt-4 text-lg text-gray-600 mb-12">Qui reprend la route ?</p>
+                
+                <div class="space-y-6">
+                    <!-- MODIFIÉ: Icônes et login 'perla' -->
+                    <button onclick="login('perla')" class="w-full p-6 rounded-2xl shadow-lg bg-primary hover:bg-rose-200 transition-all">
+                        <span class="text-6xl">👩🏻‍🔬</span>
+                        <span class="block font-display text-3xl font-bold text-rose-800 mt-2">Perla</span>
+                    </button>
+                    
+                    <!-- MODIFIÉ: Icônes et login 'romain' -->
+                    <button onclick="login('romain')" class="w-full p-6 rounded-2xl shadow-lg bg-blue-100 hover:bg-blue-200 transition-all">
+                        <span class="text-6xl">👨🏻‍💼</span>
+                        <span class="block font-display text-3xl font-bold text-blue-800 mt-2">Romain</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!--            Vue 1: ACCUEIL               -->
+            <!-- ======================================= -->
+            <div id="view-home" class="p-6 pt-10 hidden">
+                <header class="text-center mb-8">
+                    <h1 class="font-display text-3xl font-bold text-rose-800">Roroad to Love</h1>
+                    <p class="mt-4 text-lg text-gray-600">
+                        Bienvenue, <span id="home-welcome-name" class="font-bold"></span> 💞<br>
+                        <span class="text-base italic">Prêts à reprendre la route de l’amour ?</span>
+                    </p>
+                </header>
+
+                <!-- NOUVEAU: Progression des Joueurs -->
+                <div class="mb-6 space-y-4">
+                    <h3 class="font-display text-xl text-rose-800 text-center mb-2">Progression 🌹 Reset Love</h3>
+                    
+                    <!-- Progression Perla -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <!-- MODIFIÉ: Icône -->
+                            <span class="text-sm font-semibold text-rose-700">Perla 💃🏻</span>
+                            <span class="text-sm text-gray-500"><span id="home-progress-text-perla">0</span> / 100 💕</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div id="home-progress-bar-perla" class="bg-gradient-to-r from-rose-300 to-pink-400 h-4 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                        </div>
+                    </div>
+        
+                    <!-- Progression Romain -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <!-- MODIFIÉ: Icône et ID -->
+                            <span class="text-sm font-semibold text-blue-700">Romain 🕺🏻</span>
+                            <span class="text-sm text-gray-500"><span id="home-progress-text-romain">0</span> / 100 💕</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div id="home-progress-bar-romain" class="bg-gradient-to-r from-blue-300 to-blue-400 h-4 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Banque d'Amour Solde (reste personnel) -->
+                <div class="mb-8 text-center bg-primary p-4 rounded-xl shadow-inner">
+                    <h3 class="text-sm font-semibold text-rose-800 opacity-75">Banque d'Amour 🏦</h3>
+                    <!-- CORRECTION: Ajout du <p> et <span> manquant -->
+                    <p class="text-4xl font-bold text-rose-900"><span id="home-love-bank">0</span> 💕</p>
+                </div>
+                
+                <!-- Boutons de navigation principaux (GRILLE MISE À JOUR 3x3) -->
+                <nav class="grid grid-cols-3 gap-3">
+                    <button onclick="showView('new-mission')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">🎲</span>
+                        <span class="font-semibold text-xs text-center">Nouvelle Mission</span>
+                    </button>
+                    <button id="ongoing-mission-btn" onclick="showView('ongoing-mission')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">🎯</span>
+                        <span class="font-semibold text-xs text-center">Mission en Cours</span>
+                    </button>
+                    <button onclick="showView('bank')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">🏦</span>
+                        <span class="font-semibold text-xs text-center">Banque d'Amour</span>
+                    </button>
+                    <!-- MODIFIÉ: Remplacement de btn-secondary par btn-gold-flashy -->
+                    <button onclick="showView('timeline')" class="p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28 btn-gold-flashy">
+                        <span class="text-3xl">🛣️</span>
+                        <span class="font-semibold text-xs text-center">L'Aventure A → Z</span>
+                    </button>
+                    <button onclick="showView('cards')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">🎴</span>
+                        <span class="font-semibold text-xs text-center">Cartes Spéciales</span>
+                    </button>
+                    <button onclick="showView('jokers')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">💎</span>
+                        <span class="font-semibold text-xs text-center">Jokers</span>
+                    </button>
+                    <button onclick="showView('mailbox')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">📬</span>
+                        <span class="font-semibold text-xs text-center">Boite aux Lettres</span>
+                    </button>
+                    <!-- NOUVEAU BOUTON "Galerie" -->
+                    <button onclick="showView('gallery')" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">🖼️</span>
+                        <span class="font-semibold text-xs text-center">Galerie Photos</span>
+                    </button>
+                    <button onclick="logout()" class="btn-primary p-3 rounded-xl shadow-lg flex flex-col items-center justify-center h-28">
+                        <span class="text-3xl">🔄</span>
+                        <span class="font-semibold text-xs text-center">Changer de Joueur</span>
+                    </button>
+                </nav>
+
+                <!-- Derniers souvenirs -->
+                <div class="mt-8">
+                    <h3 class="font-display text-xl text-rose-800 mb-3">Derniers Souvenirs</h3>
+                    <div id="home-souvenirs" class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+                        <!-- Les souvenirs seront injectés ici par JS -->
+                        <p class="text-sm text-gray-500 italic">Commencez une mission pour ajouter un souvenir...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!--    Vue NOUVELLE MISSION (LA ROUE)       -->
+            <!-- ======================================= -->
+            <div id="view-new-mission" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="showView('home')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Nouvelle Mission</h2>
+                </header>
+                
+                <p class="text-center text-gray-600 mb-6 italic">Prêts pour un nouveau défi ? Laissez le destin choisir...</p>
+
+                <!-- Roue des Missions (Lettres) -->
+                <div class="mb-6">
+                    <h3 class="font-display text-xl text-rose-800 mb-2 text-center">1. Quelle mission ?</h3>
+                    <div class="wheel-container">
+                        <div class="wheel-marker"></div>
+                        <div id="wheel-letter" class="wheel-inner text-rose-800">
+                            <!-- Les lettres A-Z seront injectées ici -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roue des Modes de Jeu -->
+                <div class="mb-8">
+                    <h3 class="font-display text-xl text-rose-800 mb-2 text-center">2. Quel mode ?</h3>
+                    <div class="wheel-container">
+                        <div class="wheel-marker"></div>
+                        <div id="wheel-mode" class="wheel-inner text-rose-800">
+                             <!-- Les modes de jeu seront injectés ici -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button id="spin-button" onclick="spinWheels()" class="btn-secondary w-full p-4 rounded-xl shadow-lg text-lg font-bold">
+                        Lancer les roues 🎲
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!--    Vue BRIEFING MISSION (NOUVEAU)       -->
+            <!-- ======================================= -->
+            <div id="view-mission-briefing" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="showView('home')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Mission Lancée !</h2>
+                </header>
+                
+                <div class="text-center mb-6">
+                    <span class="text-7xl">📜</span>
+                    <h3 class="font-display text-3xl text-rose-800 mt-4" id="briefing-title">A: Aventure</h3>
+                </div>
+
+                <div class="bg-rose-50 p-4 rounded-lg mb-6 shadow-inner">
+                    <h4 class="font-semibold text-rose-800 mb-2">Description de la mission :</h4>
+                    <p class="text-gray-700" id="briefing-description">...</p>
+                </div>
+
+                <div class="bg-yellow-50 p-4 rounded-lg mb-8 shadow-inner border border-yellow-200">
+                    <h4 class="font-semibold text-rose-800 mb-2">Mode de jeu assigné :</h4>
+                    <p class="text-lg font-bold text-rose-900 mb-2" id="briefing-mode">...</p>
+                    <p class="text-sm text-gray-700" id="briefing-mode-explanation">...</p>
+                </div>
+
+                <button onclick="showView('home')" class="btn-primary w-full p-4 rounded-xl shadow-lg text-lg font-bold">
+                    Compris ! (Retour à l'accueil)
+                </button>
+            </div>
+            
+            <!-- ======================================= -->
+            <!--    Vue MISSION EN COURS       -->
+            <!-- ======================================= -->
+            <div id="view-ongoing-mission" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="showView('home')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1" id="mission-ongoing-title">Mission en Cours</h2>
+                </header>
+
+                <!-- Message si aucune mission -->
+                <div id="no-ongoing-mission" class="text-center p-6 bg-rose-50 rounded-lg hidden">
+                    <span class="text-4xl">🤷‍♀️</span>
+                    <p class="mt-4 text-gray-700 font-semibold">Aucune mission en cours.</p>
+                    <p class="text-sm text-gray-500 mt-2">Allez à "Nouvelle Mission" pour en lancer une !</p>
+                    <button onclick="showView('new-mission')" class="btn-primary mt-4 px-4 py-2">Lancer une mission</button>
+                </div>
+                
+                <!-- Contenu de la mission en cours -->
+                <div id="ongoing-mission-content">
+                    <div class="bg-primary p-4 rounded-xl shadow-inner mb-4">
+                        <h3 class="font-semibold text-rose-800">Mode de jeu</h3>
+                        <p class="text-lg font-bold text-rose-900" id="mission-ongoing-mode">Duo</p>
+                        <!-- NOUVEL AJOUT: Explication du mode de jeu -->
+                        <p class="text-sm text-rose-800 opacity-90 mt-2" id="mission-ongoing-mode-explanation"></p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-rose-800 mb-2">Description</h3>
+                        <p class="text-gray-700" id="mission-ongoing-description">Une description du thème de la mission...</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-rose-800 mb-2">Souvenir</h3>
+                        <img id="mission-ongoing-photo-preview" src="https://placehold.co/600x400/FADADD/8B4513?text=Ajouter+une+photo" alt="Souvenir" class="w-full rounded-lg shadow-md object-cover h-48 mb-2">
+                        <input type="file" class="text-sm" onchange="previewMissionPhoto(event)">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-rose-800 mb-2">Note souvenir</h3>
+                        <textarea id="mission-ongoing-note" class="w-full p-2 border border-rose-200 rounded-lg" rows="3" placeholder="Écrivez un petit mot sur ce moment..."></textarea>
+                    </div>
+
+                    <!-- NOUVELLE SECTION: Bonus Actifs -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-rose-800 mb-2">Bonus Actifs</h3>
+                        <div id="ongoing-mission-bonuses" class="p-4 bg-rose-50 rounded-lg space-y-2 min-h-[40px]">
+                            <!-- Les bonus actifs seront injectés ici -->
+                            <p class="text-sm text-gray-500 italic">Aucun bonus actif pour cette mission.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-rose-800 mb-2">Ajouter des Bonus</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="showView('cards')" class="btn-primary p-3 rounded-lg text-sm font-semibold">Ajouter Carte 🎴</button>
+                            <button onclick="showView('jokers')" class="btn-primary p-3 rounded-lg text-sm font-semibold">Ajouter Joker 💎</button>
+                        </div>
+                    </div>
+
+                    <button onclick="goToScoringFromOngoing()" id="goto-scoring-button-ongoing" class="btn-secondary w-full p-4 rounded-xl shadow-lg text-lg font-bold">
+                        Terminer & Noter la Mission 🧮
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- ======================================= -->
+            <!--         Vue: TIMELINE (A-Z)             -->
+            <!-- ======================================= -->
+            <div id="view-timeline" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="showView('home')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Roroad A → Z</h2>
+                </header>
+
+                <div class="grid grid-cols-4 gap-4" id="timeline-grid">
+                    <!-- Les bulles de mission seront injectées ici par JS -->
+                </div>
+                
+                <!-- Bulle Reset Love -->
+                <div class="mt-6 flex justify-center">
+                    <button onclick="tryShowResetLove()" class="w-24 h-24 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-2 border-yellow-300 pulse-gold bg-gradient-to-br from-yellow-300 to-rose-300">
+                        <span class="text-4xl">🌹</span>
+                        <span class="text-xs font-bold text-rose-900">Reset Love</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!--         Vue: FICHE MISSION (Vitrine)    -->
+            <!-- ======================================= -->
+            <div id="view-mission" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <!-- NOUVEAU: Le bouton retour renvoie à la Timeline -->
+                    <button onclick="showView('timeline')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1" id="mission-title">A: Aventure</h2>
+                </header>
+
+                <div class="bg-primary p-4 rounded-xl shadow-inner mb-4">
+                    <h3 class="font-semibold text-rose-800">Mode de jeu</h3>
+                    <p class="text-lg font-bold text-rose-900" id="mission-mode">Duo</p>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="font-semibold text-rose-800 mb-2">Description</h3>
+                    <p class="text-gray-700" id="mission-description">Une description du thème de la mission...</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-semibold text-rose-800 mb-2">Souvenir</h3>
+                    <img id="mission-photo-preview" src="https://placehold.co/600x400/FADADD/8B4513?text=Ajouter+une+photo" alt="Souvenir" class="w-full rounded-lg shadow-md object-cover h-48 mb-2">
+                    <input type="file" class="text-sm" onchange="previewMissionPhoto(event)">
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="font-semibold text-rose-800 mb-2">Note souvenir</h3>
+                    <textarea id="mission-note" class="w-full p-2 border border-rose-200 rounded-lg" rows="3" placeholder="Écrivez un petit mot sur ce moment..."></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="font-semibold text-rose-800 mb-2">Statut</h3>
+                    <div class="flex gap-2" id="mission-status-buttons">
+                        <!-- Boutons de statut injectés par JS -->
+                    </div>
+                </div>
+
+                <!-- Bouton "Noter" est caché par défaut, car c'est une vitrine -->
+                <button onclick="showScoringScreen()" id="goto-scoring-button" class="btn-secondary w-full p-4 rounded-xl shadow-lg text-lg font-bold hidden">
+                    Noter la Mission 🧮
+                </button>
+            </div>
+            
+            <!-- ======================================= -->
+            <!--          Vue: ÉCRAN SCORE               -->
+            <!-- ======================================= -->
+            <div id="view-score" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <!-- NOUVEAU: Le bouton retour renvoie à la mission en cours -->
+                    <button onclick="showView('ongoing-mission')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Noter la Mission</h2>
+                </header>
+                
+                <p class="text-center text-gray-600 mb-6 italic">Comment s'est passé ce moment ? (1-5)</p>
+                
+                <!-- Critères -->
+                <div class="space-y-4 mb-6">
+                    <!-- Créativité -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-rose-800 mb-2">💡 Créativité</h3>
+                        <div id="stars-creativite" class="flex justify-between text-4xl text-yellow-400">
+                            <span onclick="setRating('creativite', 1)" data-value="1" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('creativite', 2)" data-value="2" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('creativite', 3)" data-value="3" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('creativite', 4)" data-value="4" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('creativite', 5)" data-value="5" class="cursor-pointer opacity-30">★</span>
+                        </div>
+                    </div>
+                    <!-- Effort -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-rose-800 mb-2">❤️ Effort & Intention</h3>
+                        <div id="stars-effort" class="flex justify-between text-4xl text-yellow-400">
+                            <span onclick="setRating('effort', 1)" data-value="1" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('effort', 2)" data-value="2" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('effort', 3)" data-value="3" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('effort', 4)" data-value="4" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('effort', 5)" data-value="5" class="cursor-pointer opacity-30">★</span>
+                        </div>
+                    </div>
+                    <!-- Complicité -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-rose-800 mb-2">😍 Complicité</h3>
+                        <div id="stars-complicite" class="flex justify-between text-4xl text-yellow-400">
+                            <span onclick="setRating('complicite', 1)" data-value="1" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('complicite', 2)" data-value="2" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('complicite', 3)" data-value="3" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('complicite', 4)" data-value="4" class="cursor-pointer opacity-30">★</span>
+                            <span onclick="setRating('complicite', 5)" data-value="5" class="cursor-pointer opacity-30">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bonus -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-rose-800 mb-2">🌟 Bonus Optionnels</h3>
+                    <div class="space-y-2 bg-rose-50 p-4 rounded-lg">
+                        <label class="flex items-center"><input type="checkbox" id="bonus-photo" class="mr-2"> Photo souvenir (+1)</label>
+                        <label class="flex items-center"><input type="checkbox" id="bonus-surprise" class="mr-2"> Surprise cachée (+1)</label>
+                        <label class="flex items-center"><input type="checkbox" id="bonus-ambiance" class="mr-2"> Ambiance parfaite (+2)</label>
+                        <label class="flex items-center"><input type="checkbox" id="bonus-twist" class="mr-2"> Mission twistée (+2)</label>
+                        <label class="flex items-center"><input type="checkbox" id="bonus-express" class="mr-2"> Mission express (+1)</label>
+                    </div>
+                </div>
+                
+                <!-- Info Jokers/Cartes -->
+                <div id="score-bonus-info" class="text-center text-accent font-semibold mb-4">
+                    <!-- Info sur bonus actifs -->
+                </div>
+
+                <button onclick="calculateScore()" class="btn-secondary w-full p-4 rounded-xl shadow-lg text-lg font-bold">
+                    Valider le Score
+                </button>
+            </div>
+            
+            <!-- ======================================= -->
+            <!--        Vue: BANQUE D'AMOUR              -->
+            <!-- ======================================= -->
+            <div id="view-bank" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="showView('home')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Banque d'Amour 🏦</h2>
+                </header>
+
+                <div class="mb-6 text-center bg-primary p-6 rounded-xl shadow-inner">
+                    <h3 class="text-lg font-semibold text-rose-800 opacity-75">Solde Actuel</h3>
+                    <p class="text-5xl font-bold text-rose-900"><span id="bank-total-points">0</span> 💕</p>
+                </div>
+                
+                <!-- Progression Reset Love -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-semibold text-rose-700">Progression</span>
+                        <span class="text-lg font-bold text-accent">🌹 Reset Love</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="bank-progress-bar" class="bg-gradient-to-r from-rose-300 to-yellow-400 h-4 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                    <div class="text-right mt-1 text-sm text-gray-500"><span id="bank-progress-text">0</span> / 100 💕</div>
+                </div>
+                
+                <!-- NOUVELLE SECTION: Inventaire des récompenses -->
+                <h3 class="font-display text-xl text-rose-800 mb-4">Vos Récompenses à Utiliser 🎁</h3>
+                <div class="space-y-3 mb-8" id="purchased-rewards-inventory">
+                    <p class="text-sm text-gray-500 italic text-center p-4 bg-gray-50 rounded-lg">Aucune récompense en attente. Achetez-en une ci-dessous !</p>
+                    <!-- L'inventaire sera injecté ici -->
+                </div>
+
+                <!-- MODIFIÉ: Titre de la boutique -->
+                <h3 class="font-display text-xl text-rose-800 mb-4">Acheter des Récompenses 🛍️</h3>
+                <div class="space-y-3" id="rewards-list">
+                    <!-- Liste des récompenses injectée par JS -->
+                </div>
+            </div>
+            
+            <!-- ======================================= -->
+            <!--       Vue: CARTES SPÉCIALES             -->
+            <!-- ======================================= -->
+            <div id="view-cards" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <!-- CORRECTION: Utilisation de la nouvelle fonction goBack() -->
+                    <button onclick="goBack()" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Cartes Spéciales 🎴</h2>
+                </header>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="cards-grid">
+                    <!-- Cartes injectées par JS -->
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!--            Vue: JOKERS                  -->
+            <!-- ======================================= -->
+            <div id="view-jokers" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <!-- CORRECTION: Utilisation de la nouvelle fonction goBack() -->
+                    <button onclick="goBack()" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Jokers 💎</h2>
+                </header>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="jokers-grid">
+                    <!-- Jokers injectées par JS -->
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!--        Vue: RESET LOVE 🌹              -->
+            <!-- ======================================= -->
+            <div id="view-reset-love" class="p-6 h-screen flex flex-col justify-center text-center bg-gradient-to-br from-rose-200 to-yellow-200 hidden">
+                <span class="text-7xl mb-6">🌹</span>
+                <h1 class="font-display text-4xl font-bold text-rose-900">Reset Love</h1>
+                <p class="mt-4 text-lg text-rose-800 italic">"Chaque aventure a sa fin, mais la nôtre recommence à chaque battement de cœur."</p>
+                
+                <p class="mt-8 mb-6 text-gray-700">Félicitations ! Vous avez atteint l'apothéose. Choisissez votre expérience finale pour cette saison :</p>
+                
+                <div class="space-y-3 mb-8">
+                    <button class="w-full p-3 bg-white/70 rounded-lg font-semibold text-rose-800 border border-white">💌 Lettre miroir</button>
+                    <button class="w-full p-3 bg-white/70 rounded-lg font-semibold text-rose-800 border border-white">🎁 Souvenir éternel</button>
+                    <button class="w-full p-3 bg-white/70 rounded-lg font-semibold text-rose-800 border border-white">🌅 Voyage symbolique</button>
+                    <button class="w-full p-3 bg-white/70 rounded-lg font-semibold text-rose-800 border border-white">💍 Promesse Roroad</button>
+                </div>
+                
+                <button onclick="completeResetLove()" class="btn-secondary w-full p-4 rounded-xl shadow-lg text-lg font-bold">
+                    Commencer une nouvelle saison
+                </button>
+            </div>
+            
+            <!-- ======================================= -->
+            <!--   NOUVELLE VUE: Lettre d'Amour 💌     -->
+            <!-- ======================================= -->
+            <div id="view-love-letter" class="p-6 hidden bg-gradient-to-br from-rose-100 to-rose-50 min-h-screen">
+                <header class="flex items-center mb-6">
+                    <button onclick="goBack()" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Lettre d'Amour</h2>
+                </header>
+                
+                <div class="text-center mb-6">
+                    <span class="text-7xl heart-beat">💌</span>
+                    <p class="text-lg text-rose-700 italic mt-4">"Les mots d'amour sont des trésors..."</p>
+                </div>
+                
+                <p class="text-gray-700 mb-4">Cette carte remplace votre mission actuelle par l'écriture d'une lettre d'amour. Prenez votre temps.</p>
+                
+                <div>
+                    <textarea id="love-letter-text" class="w-full p-4 border border-rose-200 rounded-lg text-lg" rows="12" placeholder="Écrivez votre lettre ici..."></textarea>
+                </div>
+                
+                <button onclick="sendLoveLetter()" class="btn-secondary w-full p-4 rounded-xl shadow-lg text-lg font-bold mt-6">
+                    Envoyer la Lettre
+                </button>
+            </div>
+
+            <!-- ======================================= -->
+            <!--   NOUVELLE VUE: Boite aux Lettres 📬    -->
+            <!-- ======================================= -->
+            <div id="view-mailbox" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="showView('home')" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Boite aux Lettres 📬</h2>
+                </header>
+                
+                <div id="mailbox-log" class="space-y-4">
+                    <!-- Le journal des actions sera injecté ici -->
+                    <p class="text-center text-gray-500 italic p-8">Votre histoire commence ici... Lancez une mission !</p>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!-- NOUVELLE VUE: Steal My Heart 🔥 -->
+            <!-- ======================================= -->
+            <div id="view-steal-reward" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="goBack()" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Steal My Heart 🔥</h2>
+                </header>
+                
+                <p class="text-center text-gray-600 mb-6 italic">Choisissez une récompense à voler dans l'inventaire de votre partenaire...</p>
+
+                <div id="steal-reward-list" class="space-y-3">
+                    <!-- Les récompenses à voler seront injectées ici -->
+                </div>
+            </div>
+            
+            <!-- ======================================= -->
+            <!-- NOUVELLE VUE: Galerie Photos 🖼️ -->
+            <!-- ======================================= -->
+            <div id="view-gallery" class="p-6 hidden">
+                <header class="flex items-center mb-6">
+                    <button onclick="goBack()" class="text-2xl p-2 rounded-full hover:bg-rose-100">←</button>
+                    <h2 class="font-display text-2xl font-bold text-rose-800 text-center flex-1">Galerie Photos 🖼️</h2>
+                </header>
+                
+                <div id="gallery-grid" class="grid grid-cols-3 gap-2">
+                    <!-- Les photos seront injectées ici -->
+                </div>
+                <div id="gallery-empty" class="text-center p-6 bg-rose-50 rounded-lg hidden">
+                    <span class="text-4xl">🤷‍♀️</span>
+                    <p class="mt-4 text-gray-700 font-semibold">Aucune photo dans la galerie.</p>
+                    <p class="text-sm text-gray-500 mt-2">Terminez une mission avec une photo pour la voir apparaître ici !</S>
+                </div>
+            </div>
+
+
+        </div> <!-- Fin de #app-container -->
+
+        <!-- ======================================= -->
+        <!--           MODAL (pour alertes)          -->
+        <!-- ======================================= -->
+        <div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-40">
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                <span id="modal-icon" class="text-5xl">💖</span>
+                <h3 id="modal-title" class="font-display text-2xl text-rose-800 mt-4 mb-2">Modal Title</h3>
+                <p id="modal-message" class="text-gray-700 mb-6">This is the modal message.</p>
+                <button id="modal-close-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold">Fermer</button>
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!--   MODAL Rachat Joker (NOUVEAU)        -->
+        <!-- ======================================= -->
+        <div id="joker-repurchase-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                <span class="text-5xl">💎</span>
+                <h3 class="font-display text-2xl text-rose-800 mt-4 mb-2">Racheter un Joker</h3>
+                <p class="text-gray-700 mb-6">Lequel souhaitez-vous réactiver ? (Coût: 40 💕)</p>
+                <div id="joker-repurchase-list" class="space-y-3 mb-6">
+                    <!-- Les jokers utilisés seront injectés ici -->
+                </div>
+                <button onclick="closeJokerRepurchaseModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold">Annuler</button>
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!--   NOUVEAU: MODAL Rachat Carte           -->
+        <!-- ======================================= -->
+        <div id="card-repurchase-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                <span class="text-5xl">🎴</span>
+                <h3 class="font-display text-2xl text-rose-800 mt-4 mb-2">Racheter une Carte</h3>
+                <p class="text-gray-700 mb-6">Laquelle souhaitez-vous réactiver ? (Coût: 20 💕)</p>
+                <div id="card-repurchase-list" class="space-y-3 mb-6">
+                    <!-- Les cartes utilisées seront injectées ici -->
+                </div>
+                <button onclick="closeCardRepurchaseModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold">Annuler</button>
+            </div>
+        </div>
+        
+        <!-- ======================================= -->
+        <!-- NOUVEAU: MODAL Confirmation Joker Destin -->
+        <!-- ======================================= -->
+        <div id="destin-confirmation-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                <span class="text-5xl">🔮</span>
+                <h3 class="font-display text-2xl text-rose-800 mt-4 mb-2">Confirmer la Mission</h3>
+                <p class="text-gray-700 mb-6">Voulez-vous vraiment lancer cette mission ?</p>
+                
+                <div class="bg-rose-50 p-4 rounded-lg mb-6 shadow-inner text-left">
+                    <h4 class="font-semibold text-rose-800">Mission :</h4>
+                    <p class="text-lg font-bold text-rose-900" id="destin-modal-title">...</p>
+                    <h4 class="font-semibold text-rose-800 mt-2">Description :</h4>
+                    <p class="text-sm text-gray-700" id="destin-modal-description">...</p>
+                </div>
+
+                <div class="space-y-3">
+                    <button onclick="confirmDestinMission()" class="btn-secondary w-full px-6 py-3 rounded-lg font-semibold">Confirmer ce choix</button>
+                    <button onclick="closeDestinConfirmationModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold">Annuler (Choisir une autre)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!-- NOUVEAU: MODAL Formulaire Secret Love -->
+        <!-- ======================================= -->
+        <!-- MODIFIÉ: Ajout de onclick="closeSecretLoveModal()" sur l'overlay -->
+        <div id="secret-love-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50" onclick="closeSecretLoveModal()">
+            <!-- MODIFIÉ: Ajout de onclick="event.stopPropagation()" pour ne pas fermer en cliquant sur le contenu -->
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full" onclick="event.stopPropagation()">
+                <div class="text-center">
+                    <span class="text-5xl">🌈</span>
+                    <h3 class="font-display text-2xl text-rose-800 mt-4 mb-2">Valider une Mission Secrète</h3>
+                    <p class="text-gray-700 mb-6">Racontez la mission secrète que vous avez réalisée. (Bonus fixe: 15 💕)</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="secret-mission-title" class="text-sm font-semibold text-rose-800">Titre de votre mission</label>
+                        <input type="text" id="secret-mission-title" class="w-full p-2 border border-rose-200 rounded-lg mt-1" placeholder="Ex: J'ai préparé son dessert préféré">
+                    </div>
+                    <div>
+                        <label for="secret-mission-description" class="text-sm font-semibold text-rose-800">Racontez (sera vu par votre partenaire)</label>
+                        <textarea id="secret-mission-description" class="w-full p-2 border border-rose-200 rounded-lg mt-1" rows="3" placeholder="Expliquez ce que vous avez fait..."></textarea>
+                    </div>
+                    <!-- NOUVEL AJOUT -->
+                    <div>
+                        <label for="secret-mission-date" class="text-sm font-semibold text-rose-800">Date de la mission (optionnel)</label>
+                        <input type="date" id="secret-mission-date" class="w-full p-2 border border-rose-200 rounded-lg mt-1">
+                    </div>
+                </div>
+
+                <div class="space-y-3 mt-6">
+                    <button onclick="confirmSecretMission()" class="btn-secondary w-full px-6 py-3 rounded-lg font-semibold">Valider & Gagner 15 💕</button>
+                    <button onclick="closeSecretLoveModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold">Annuler</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!-- NOUVEAU: MODAL Confirmation Joker Orga -->
+        <!-- ======================================= -->
+        <div id="orga-confirmation-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                <span class="text-5xl">🕯️</span>
+                <h3 class="font-display text-2xl text-rose-800 mt-4 mb-2">Annuler la Mission ?</h3>
+                <p class="text-gray-700 mb-6">Voulez-vous vraiment utiliser ce joker pour annuler la mission : <br><strong id="orga-modal-mission-theme" class="text-rose-900">...</strong> ?</p>
+                
+                <div class="space-y-3">
+                    <button onclick="confirmCancelMission()" class="btn-secondary w-full px-6 py-3 rounded-lg font-semibold">Oui, annuler la mission</button>
+                    <button onclick="closeOrgaConfirmationModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold">Non, continuer la mission</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!-- NOUVEAU: MODAL Confirmation Carte Switch -->
+        <!-- ======================================= -->
+        <div id="switch-confirmation-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-50">
+            <div class="bg-base p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                <span class="text-5xl">🎲</span>
+                <h3 class="font-display text-2xl text-rose-800 mt-4 mb-2">Échanger les Rôles ?</h3>
+                <p class="text-gray-700 mb-6">Voulez-vous vraiment utiliser cette carte pour échanger les rôles sur la mission : <br><strong id="switch-modal-mission-theme" class="text-rose-900">...</strong> ?</p>
+                
+                <div class="space-y-3">
+                    <button onclick="confirmSwitchMission()" class="btn-secondary w-full px-6 py-3 rounded-lg font-semibold">Oui, échanger les rôles</button>
+                    <button onclick="closeSwitchConfirmationModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold">Non, annuler</button>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- Fin du conteneur mobile -->
+
+
+    <script type="module">
+        // CORRECTION: Commentaire HTML remplacé par un commentaire JS
+        // Initialisation des sons
+        let audioReady = false;
+        const clickSynth = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.1, sustain: 0.01, release: 0.1 } }).toDestination();
+        const pointSynth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.2 } }).toDestination();
+        const rewardSynth = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.5, sustain: 0.1, release: 0.5 } }).toDestination();
+        const winSynth = new Tone.Synth().toDestination();
+
+        // Fonction pour initialiser l'audio au premier clic
+        async function initAudio() {
+            if (audioReady) return;
+            await Tone.start();
+            audioReady = true;
+            console.log('Audio prêt.');
+        }
+
+        function playSound(type) {
+            if (!audioReady) return;
+            try {
+                const now = Tone.now();
+                if (type === 'click') clickSynth.triggerAttackRelease('C5', '8n', now + 0.01);
+                if (type === 'point') pointSynth.triggerAttackRelease('G5', '4n', now + 0.01);
+                if (type === 'reward') rewardSynth.triggerAttackRelease('C6', '2n', now + 0.01);
+                if (type === 'win') winSynth.triggerAttackRelease('C5', '8n', now + 0.1);
+            } catch (e) {
+                console.error('Erreur audio:', e);
+            }
+        }
+        
+        // --- État de l'application (Game State) ---
+
+        // Modèles pour un nouvel état joueur
+        const missionTemplates = [
+            { id: 'A', theme: 'Aventure', status: 'todo', score: 0, photo: null, note: '', description: "Vivre une nouvelle expérience ensemble, même petite.", completedBy: null, mode: null },
+            { id: 'B', theme: 'Brunch', status: 'todo', score: 0, photo: null, note: '', description: "Préparer ou partager un petit-déjeuner/brunch de rois.", completedBy: null, mode: null },
+            { id: 'C', theme: 'Créativité', status: 'todo', score: 0, photo: null, note: '', description: "Faire quelque chose d'artistique : peinture, musique, écriture...", completedBy: null, mode: null },
+            { id: 'D', theme: 'Danse', status: 'todo', score: 0, photo: null, note: '', description: "Une danse impromptue dans le salon ou une soirée salsa.", completedBy: null, mode: null },
+            { id: 'E', theme: 'Évasion', status: 'todo', score: 0, photo: null, note: '', description: "S'échapper de la routine, même pour une heure.", completedBy: null, mode: null },
+            { id: 'F', theme: 'Fantaisie', status: 'todo', score: 0, photo: null, note: '', description: "Réaliser un petit fantasme ou un rêve partagé.", completedBy: null, mode: null },
+            { id: 'G', theme: 'Gourmandise', status: 'todo', score: 0, photo: null, note: '', description: "Cuisiner le dessert préféré de l'autre ou un festin.", completedBy: null, mode: null },
+            { id: 'H', theme: 'Humour', status: 'todo', score: 0, photo: null, note: '', description: "Une soirée blagues, stand-up ou comédie.", completedBy: null, mode: null },
+            { id: 'I', theme: 'Inattendu', status: 'todo', score: 0, photo: null, note: '', description: "Une surprise totale pour l'autre.", completedBy: null, mode: null },
+            { id: 'J', theme: 'Jeu', status: 'todo', score: 0, photo: null, note: '', description: "Soirée jeux de société, jeux vidéo en duo.", completedBy: null, mode: null },
+            { id: 'K', theme: 'Kâlin', status: 'todo', score: 0, photo: null, note: '', description: "Un moment dédié uniquement aux câlins et à la tendresse.", completedBy: null, mode: null },
+            { id: 'L', theme: 'Ludique', status: 'todo', score: 0, photo: null, note: '', description: "Retomber en enfance : parc d'attraction, bataille de polochons...", completedBy: null, mode: null },
+            { id: 'M', theme: 'Magie', status: 'todo', score: 0, photo: null, note: '', description: "Créer un moment féérique : bougies, étoiles, lieu secret.", completedBy: null, mode: null },
+            { id: 'N', theme: 'Nuit', status: 'todo', score: 0, photo: null, note: '', description: "Une balade nocturne, une nuit blanche à discuter.", completedBy: null, mode: null },
+            { id: 'O', theme: 'Osé', status: 'todo', score: 0, photo: null, note: '', description: "Sortir de sa zone de confort, oser quelque chose de nouveau.", completedBy: null, mode: null },
+            { id: 'P', theme: 'Passion', status: 'todo', score: 0, photo: null, note: '', description: "Une soirée dédiée à raviver la flamme.", completedBy: null, mode: null },
+            { id: 'Q', theme: 'Quotidien', status: 'todo', score: 0, photo: null, note: '', description: "Rendre un moment banal (courses, ménage) extraordinaire.", completedBy: null, mode: null },
+            { id: 'R', theme: 'Rêve', status: 'todo', score: 0, photo: null, note: '', description: "Parler de vos rêves communs et en planifier un.", completedBy: null, mode: null },
+            { id: 'S', theme: 'Surprise', status: 'todo', score: 0, photo: null, note: '', description: "Un petit cadeau ou une attention non planifiée.", completedBy: null, mode: null },
+            { id: 'T', theme: 'Tendre', status: 'todo', score: 0, photo: null, note: '', description: "Un échange de massages, un bain partagé...", completedBy: null, mode: null },
+            { id: 'U', theme: 'Unique', status: 'todo', score: 0, photo: null, note: '', description: "Recréer un souvenir unique à votre histoire.", completedBy: null, mode: null },
+            { id: 'V', theme: 'Voyage', status: 'todo', score: 0, photo: null, note: '', description: "Planifier vos prochaines vacances ou un week-end.", completedBy: null, mode: null },
+            { id: 'W', theme: 'Week-end', status: 'todo', score: 0, photo: null, note: '', description: "Un week-end parfait, organisé à deux.", completedBy: null, mode: null },
+            { id: 'X', theme: 'Xtrême', status: 'todo', score: 0, photo: null, note: '', description: "Une petite dose d'adrénaline (sport, défi...)." , completedBy: null, mode: null },
+            { id: 'Y', theme: 'Yoga', status: 'todo', score: 0, photo: null, note: '', description: "Un moment de détente et de connexion : yoga ou méditation à deux.", completedBy: null, mode: null },
+            { id: 'Z', theme: 'Zénith', status: 'todo', score: 0, photo: null, note: '', description: "Atteindre un sommet, au propre (randonnée) ou au figuré.", completedBy: null, mode: null },
+        ];
+
+        const cardTemplates = [
+            { id: 'switch', name: 'Switch', effect: 'Échange les rôles pour la mission', icon: '🎲' },
+            { id: 'double', name: 'Double Point', effect: 'Double le score final', icon: '💌' },
+            { id: 'coeur', name: 'Cœur', effect: 'Remplace la mission par un geste d’amour', icon: '💕' },
+            { id: 'secret', name: 'Secret Love', effect: 'Crée une mission surprise', icon: '🌈' },
+            { id: 'steal', name: 'Steal My Heart', effect: "Vole une récompense 'à utiliser' de l'autre.", icon: '🔥' },
+        ];
+
+        const jokerTemplates = [
+            { id: 'orga', name: 'Organisation', effect: 'Passe ton tour d’organisation', icon: '🕯️' },
+            { id: 'destin', name: 'Destin', effect: 'Choisis ou rejoue une mission aimée', icon: '🔮' },
+            { id: 'bonus', name: 'Bonus +3', effect: 'Ajoute +3 points au score final', icon: '➕' },
+        ];
+        
+        // Les récompenses restent partagées / identiques
+        const rewardsList = [
+            { name: '🍰 Douce attention', cost: 10 },
+            { name: '🎬 Soirée choisie', cost: 20 },
+            { name: '🎴 Rachat de Carte spéciale', cost: 20 },
+            { name: '🍽️ Dîner romantique', cost: 30 },
+            { name: '🌶️ Soirée Passion', cost: 35 },
+            { name: '💎 Rachat de Joker', cost: 40 },
+            { name: '🛍️ Petit achat vêtement', cost: 60 },
+            { name: '🌹 Sortie spéciale', cost: 80 },
+            { name: '💍 Reset Love', cost: 100 },
+        ];
+
+        // Liste des modes de jeu (MODIFIÉE)
+        const gameModes = ['Tour à Tour', 'Duo', 'Défi secret'];
+
+        // Explications des modes de jeu
+        const modeExplanations = {
+            'Tour à Tour': "L'un de vous (désigné par le jeu) doit organiser ou réaliser la mission pour l'autre.",
+            'Perla 💃🏻': "Tour de Perla ! 💃🏻 Perla doit organiser ou réaliser cette mission pour Romain.",
+            'Romain 🕺🏻': "Tour de Romain ! 🕺🏻 Romain doit organiser ou réaliser cette mission pour Perla.",
+            'Duo': "Mission en tandem ! Vous devez planifier et réaliser cette mission ensemble.",
+            'Défi secret': "Chacun prépare en secret sa version de la mission. Comparez vos résultats à la fin !",
+            'Destin 🔮': "Vous avez utilisé un joker pour choisir cette mission. À vous de jouer !",
+            'Secret Love 🌈': "Une mission surprise créée par vous ! À vous de jouer." // NOUVELLE EXPLICATION
+        };
+        
+        // NOUVEAU: Variable helper pour la mission en contexte
+        let contextMissionId = null;
+
+        // Fonction pour créer un état de joueur propre
+        function createPlayerState(name) {
+            return {
+                name: name,
+                lovePoints: 0,
+                activeCard: null,
+                activeJoker: null,
+                // MODIFIÉ: Ajout de la propriété "quantity"
+                cards: JSON.parse(JSON.stringify(cardTemplates)).map(c => ({ ...c, quantity: 1 })),
+                jokers: JSON.parse(JSON.stringify(jokerTemplates)).map(j => ({ ...j, quantity: 1 })),
+                scoring: { creativite: 0, effort: 0, complicite: 0 },
+                purchasedRewards: [] 
+            };
+        }
+
+        // Nouvel état global
+        let globalState = {
+            currentPlayer: null, // 'perla' ou 'romain'
+            currentView: 'login',
+            previousView: 'login', // NOUVEAU: Pour le bouton "retour"
+            destinMode: false, // NOUVEAU: Pour le joker Destin
+            destinMissionIdToConfirm: null, // NOUVEAU: Pour le modal de confirmation
+            tempSecretMissionPhoto: null, // NOUVEAU: Pour la mission secrète
+            ongoingMissionId: null, // ID de la mission en cours
+            lastAlternancePlayer: 'romain', // MODIFIÉ: Romain
+            actionLog: [], 
+            photoGallery: [], // NOUVEAU: Pour la galerie photo
+            sharedMissions: JSON.parse(JSON.stringify(missionTemplates)),
+            players: {
+                perla: createPlayerState("Perla"),
+                romain: createPlayerState("Romain") // MODIFIÉ: Romain
+            }
+        };
+
+        // L'état actif sur lequel toutes les fonctions vont opérer
+        let activePlayerState = null;
+        let onModalCloseCallback = null; // Callback pour la modale
+
+        // --- Fonctions de Navigation ---
+        
+        function login(playerName) {
+            initAudio();
+            globalState.destinMode = false; 
+            globalState.previousView = 'login'; // NOUVEAU: Réinitialiser
+            globalState.currentPlayer = playerName;
+            activePlayerState = globalState.players[playerName];
+            
+            // Appliquer le thème
+            const appContainer = document.getElementById('app-container');
+            appContainer.classList.remove('theme-perla', 'theme-romain'); // MODIFIÉ: romain
+            appContainer.classList.add(`theme-${playerName}`);
+            
+            // Mettre à jour le nom
+            document.getElementById('home-welcome-name').innerText = activePlayerState.name;
+            
+            showView('home');
+        }
+        window.login = login;
+
+        function logout() {
+            globalState.currentPlayer = null;
+            activePlayerState = null;
+            globalState.destinMode = false; 
+            globalState.previousView = 'login'; // NOUVEAU: Réinitialiser
+            
+            // Retirer le thème
+            const appContainer = document.getElementById('app-container');
+            appContainer.classList.remove('theme-perla', 'theme-romain'); // MODIFIÉ: romain
+            
+            showView('login');
+        }
+        window.logout = logout;
+
+        // MODIFIÉ: Ajout de playNavSound
+        function showView(viewId, playNavSound = true) {
+            // NOUVEAU: Mémoriser la vue précédente
+            if (viewId !== globalState.currentView) {
+                globalState.previousView = globalState.currentView;
+            }
+
+            if (!globalState.currentPlayer && viewId !== 'login') {
+                viewId = 'login'; // Forcer le login si personne n'est connecté
+            }
+
+            // LOGIQUE DE BLOCAGE
+            if (viewId === 'ongoing-mission' && globalState.ongoingMissionId) {
+                const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+                if (mission) {
+                    // MODIFIÉ: Icônes et nom
+                    if (mission.mode.includes('Perla 💃🏻') && globalState.currentPlayer === 'romain') {
+                        showModal('Stop ! ⛔', "C'est au tour de Perla de gérer cette mission.", '💃🏻');
+                        if (playNavSound) playSound('click'); 
+                        return; // Bloque la navigation
+                    }
+                    if (mission.mode.includes('Romain 🕺🏻') && globalState.currentPlayer === 'perla') {
+                        showModal('Stop ! ⛔', "C'est au tour de Romain de gérer cette mission.", '🕺🏻');
+                        if (playNavSound) playSound('click'); 
+                        return; // Bloque la navigation
+                    }
+                }
+            }
+            // FIN DE LA LOGIQUE
+
+            // NOUVEAU: Désactiver le mode Destin si on quitte la timeline
+            if (globalState.destinMode && viewId !== 'timeline') {
+                globalState.destinMode = false;
+                console.log('Mode Destin désactivé (navigation)');
+            }
+
+            // MODIFIÉ: Condition pour jouer le son
+            if (audioReady && playNavSound) playSound('click');
+            
+            document.querySelectorAll('#app-container > div').forEach(div => {
+                div.classList.add('hidden');
+            });
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            globalState.currentView = viewId;
+            
+            // Mettre à jour les vues spécifiques quand on les charge
+            if (activePlayerState) {
+                if (viewId === 'home') updateHomeUI();
+                if (viewId === 'timeline') renderTimeline();
+                if (viewId === 'new-mission') setupWheels();
+                if (viewId === 'mission-briefing') renderBriefing(); // NOUVEAU
+                if (viewId === 'ongoing-mission') renderOngoingMission(); 
+                if (viewId === 'bank') renderBank();
+                if (viewId === 'cards') renderCards();
+                if (viewId === 'jokers') renderJokers();
+                if (viewId === 'mailbox') renderMailbox(); 
+                if (viewId === 'gallery') renderGallery(); // NOUVEAU
+            }
+        }
+        window.showView = showView; // Exposer la fonction à onclick
+
+        // --- Fonctions de Rendu (UI) ---
+        
+        function updateHomeUI() {
+            // Solde banque du joueur ACTIF
+            const activePoints = activePlayerState.lovePoints;
+            document.getElementById('home-love-bank').innerText = activePoints;
+            
+            // Progression Perla
+            const perlaPoints = globalState.players.perla.lovePoints;
+            const perlaProgress = Math.min((perlaPoints / 100) * 100, 100);
+            document.getElementById('home-progress-bar-perla').style.width = `${perlaProgress}%`;
+            document.getElementById('home-progress-text-perla').innerText = perlaPoints;
+            
+            // Progression Romain (MODIFIÉ)
+            const romainPoints = globalState.players.romain.lovePoints;
+            const romainProgress = Math.min((romainPoints / 100) * 100, 100);
+            document.getElementById('home-progress-bar-romain').style.width = `${romainProgress}%`;
+            document.getElementById('home-progress-text-romain').innerText = romainPoints;
+            
+            // Gérer le bouton "Mission en Cours"
+            const ongoingBtn = document.getElementById('ongoing-mission-btn');
+            if (globalState.ongoingMissionId) {
+                ongoingBtn.disabled = false;
+            } else {
+                ongoingBtn.disabled = true;
+            }
+            
+            // Mettre à jour les souvenirs (depuis la timeline partagée)
+            const souvenirsContainer = document.getElementById('home-souvenirs');
+            souvenirsContainer.innerHTML = '';
+            const missionsDone = globalState.sharedMissions.filter(m => m.status === 'done' && m.photo);
+            
+            if(missionsDone.length === 0) {
+                souvenirsContainer.innerHTML = '<p class="text-sm text-gray-500 italic">Commencez une mission pour ajouter un souvenir...</p>';
+            } else {
+                missionsDone.reverse().slice(0, 5).forEach(m => { // 5 plus récents
+                    souvenirsContainer.innerHTML += `
+                        <img src="${m.photo}" alt="${m.theme}" class="w-20 h-20 rounded-lg object-cover shadow-sm cursor-pointer" onclick="showMissionDetail('${m.id}')">
+                    `;
+                });
+            }
+        }
+
+        function renderTimeline() {
+            const grid = document.getElementById('timeline-grid');
+            grid.innerHTML = '';
+            // Lecture depuis la timeline partagée
+            globalState.sharedMissions.forEach(m => {
+                let bgColor = 'bg-white hover:bg-rose-50';
+                let textColor = 'text-gray-400';
+                let borderColor = 'border-gray-200';
+                let completionMark = `...`; // Default
+                
+                if (m.status === 'inprogress') {
+                    bgColor = 'bg-rose-100 hover:bg-rose-200';
+                    textColor = 'text-rose-600';
+                    borderColor = 'border-rose-300';
+                } else if (m.status === 'done') {
+                    bgColor = 'bg-secondary hover:bg-yellow-300';
+                    textColor = 'text-rose-900 font-bold';
+                    borderColor = 'border-yellow-400';
+                    // MODIFIÉ: Romain
+                    const initial = m.completedBy === 'Perla' ? 'P' : (m.completedBy === 'Romain' ? 'R' : '');
+                    completionMark = `${m.score}💕 (${initial})`;
+                }
+                
+                grid.innerHTML += `
+                    <button onclick="showMissionDetail('${m.id}')" class="${bgColor} ${borderColor} w-16 h-16 rounded-full flex flex-col items-center justify-center text-center shadow-md border-2 transition-all">
+                        <span class="font-display text-2xl ${textColor}">${m.id}</span>
+                        <span class="text-xs ${textColor} -mt-1">${completionMark}</span>
+                    </button>
+                `;
+            });
+        }
+
+        // NOUVEAU: Rendu de la Boite aux Lettres
+        function renderMailbox() {
+            const container = document.getElementById('mailbox-log');
+            container.innerHTML = '';
+            
+            if (globalState.actionLog.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 italic p-8">Votre histoire commence ici... Lancez une mission !</p>';
+                return;
+            }
+
+            globalState.actionLog.forEach(item => {
+                // Si c'est une lettre d'amour
+                if (item.type === 'letter') {
+                    container.innerHTML += `
+                        <div class="p-4 bg-rose-50 border border-rose-200 rounded-lg shadow-md">
+                            <div class="flex justify-between items-center mb-3 pb-2 border-b border-rose-200">
+                                <span class="font-semibold text-rose-800">${item.icon} ${item.player} a écrit :</span>
+                                <span class="text-xs text-gray-500">${item.timestamp}</span>
+                            </div>
+                            <p class="text-gray-700 italic whitespace-pre-wrap">${item.letterContent}</p>
+                        </div>
+                    `;
+                } 
+                // NOUVEAU: Si c'est une demande de récompense
+                else if (item.type === 'reward_request') {
+                    // MODIFIÉ: Vérifie si la demande a été traitée
+                    if (item.processed) {
+                        // Rendu "Traité"
+                        container.innerHTML += `
+                            <div class="p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-sm opacity-60">
+                                <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-200">
+                                    <span class="font-semibold text-gray-600">${item.icon} DEMANDE TRAITÉE</span>
+                                    <span class="text-xs text-gray-500">${item.timestamp}</span>
+                                </div>
+                                <p class="text-gray-500 italic line-through">
+                                    <span class="font-bold">${item.player}</span> ${item.message}
+                                </p>
+                            </div>
+                        `;
+                    } else {
+                        // Rendu "Urgent / À Traiter"
+                        container.innerHTML += `
+                            <div class="p-4 bg-yellow-50 border-2 border-yellow-300 rounded-lg shadow-md">
+                                <div class="flex justify-between items-center mb-2 pb-2 border-b border-yellow-200">
+                                    <span class="font-semibold text-yellow-800">${item.icon} DEMANDE DE RÉCOMPENSE</span>
+                                    <span class="text-xs text-gray-500">${item.timestamp}</span>
+                                </div>
+                                <p class="text-gray-700 font-semibold">
+                                    <!-- MODIFIÉ: Romain -->
+                                    <span class="font-bold ${item.player === 'Perla' ? 'text-rose-800' : 'text-blue-800'}">${item.player}</span> ${item.message}
+                                </p>
+                                <!-- NOUVEAU BOUTON -->
+                                <button onclick="processRewardRequest(${item.id})" class="btn-secondary w-full mt-3 py-2 text-sm font-bold">
+                                    Marquer comme "Fait" ✅
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
+                // Si c'est une action normale
+                else {
+                    container.innerHTML += `
+                        <div class="p-3 bg-white border border-gray-100 rounded-lg flex items-center gap-3 shadow-sm">
+                            <span class="text-2xl">${item.icon}</span>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-700">
+                                    <span class="font-semibold text-rose-800">${item.player}</span> ${item.message}
+                                </p>
+                                <span class="text-xs text-gray-400">${item.timestamp}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+        
+        // NOUVELLE FONCTION: Rendu de la Galerie
+        function renderGallery() {
+            const grid = document.getElementById('gallery-grid');
+            const emptyMsg = document.getElementById('gallery-empty');
+            grid.innerHTML = '';
+            
+            if (globalState.photoGallery.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                grid.classList.add('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+                grid.classList.remove('hidden');
+                
+                // .reverse() pour montrer les plus récentes en premier
+                [...globalState.photoGallery].reverse().forEach(photo => {
+                    grid.innerHTML += `
+                        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                            <img src="${photo.src}" alt="Souvenir ${photo.missionId}" class="w-full h-full object-cover cursor-pointer" onclick="showModal('Souvenir de ${photo.theme}', '${photo.note || ''}', '🖼️')">
+                        </div>
+                    `;
+                });
+            }
+        }
+        
+        function renderBank() {
+            const points = activePlayerState.lovePoints;
+            const progress = Math.min((points / 100) * 100, 100);
+            
+            document.getElementById('bank-total-points').innerText = points;
+            document.getElementById('bank-progress-bar').style.width = `${progress}%`;
+            document.getElementById('bank-progress-text').innerText = points;
+            
+            // --- NOUVEAU: Rendu de l'inventaire ---
+            const inventoryList = document.getElementById('purchased-rewards-inventory');
+            inventoryList.innerHTML = '';
+            const purchased = activePlayerState.purchasedRewards;
+            
+            if (purchased.length === 0) {
+                inventoryList.innerHTML = '<p class="text-sm text-gray-500 italic text-center p-4 bg-gray-50 rounded-lg">Aucune récompense en attente. Achetez-en une ci-dessous !</p>';
+            } else {
+                purchased.forEach(r => {
+                    inventoryList.innerHTML += `
+                        <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border ${r.consumed ? 'border-gray-200 opacity-60' : 'border-rose-200'}">
+                            <div>
+                                <span class="font-semibold ${r.consumed ? 'text-gray-500 line-through' : 'text-rose-800'}">${r.name}</span>
+                                <span class="text-sm text-gray-500 block">${r.consumed ? 'Consommée' : 'À utiliser'}</span>
+                            </div>
+                            <!-- Simple bouton "Consommé" -->
+                            <button onclick="toggleRewardConsumed(${r.id})" class="${r.consumed ? 'bg-gray-200 text-gray-700' : 'btn-primary'} px-4 py-2 rounded-lg font-semibold text-sm">
+                                ${r.consumed ? '✓' : 'Consommer'}
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+
+            // --- Rendu de la boutique (comme avant) ---
+            const list = document.getElementById('rewards-list');
+            list.innerHTML = '';
+            rewardsList.forEach(r => {
+                let canBuy = points >= r.cost;
+                const isReset = r.name.includes('Reset Love');
+                // const isJokerRepurchase = r.name.includes('Rachat de Joker'); // N'est plus nécessaire
+                // const isCardRepurchase = r.name.includes('Rachat de Carte'); // N'est plus nécessaire
+
+                // NOTE: Les vérifications de quantité ont été retirées.
+                // Vous pouvez acheter des rachats tant que vous avez des points.
+                
+                if (isReset && points < 100) return;
+                
+                list.innerHTML += `
+                    <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border ${canBuy ? 'border-yellow-200' : 'border-gray-200'}">
+                        <div>
+                            <span class="font-semibold ${isReset ? 'text-accent' : 'text-rose-800'}">${r.name}</span>
+                            <span class="text-sm text-gray-500 block">${r.cost} pts</span>
+                        </div>
+                        <button onclick="buyReward('${r.name}', ${r.cost})" class="${canBuy ? (isReset ? 'btn-secondary' : 'btn-primary') : 'bg-gray-200 text-gray-500 cursor-not-allowed'} px-4 py-2 rounded-lg font-semibold text-sm" ${!canBuy ? 'disabled' : ''}>
+                            ${isReset ? 'Valider 🌹' : 'Acheter'}
+                        </button>
+                    </div>
+                `;
+            });
+        }
+        
+        function renderCards() {
+            const grid = document.getElementById('cards-grid');
+            grid.innerHTML = '';
+            activePlayerState.cards.forEach(c => {
+                const quantity = c.quantity; // NOUVEAU
+                const isDepleted = c.quantity === 0; // MODIFIÉ
+                const isActive = activePlayerState.activeCard === c.id;
+                
+                grid.innerHTML += `
+                    <div class="p-4 bg-white rounded-xl shadow-lg border ${isActive ? 'border-yellow-500 ring-2 ring-yellow-300' : 'border-rose-100'} ${isDepleted ? 'opacity-50' : ''} relative">
+                        <!-- NOUVEAU: Badge de Quantité -->
+                        ${quantity > 0 ? `<span class="absolute top-2 right-2 bg-secondary text-rose-900 text-xs font-bold px-2 py-1 rounded-full z-10">x${quantity}</span>` : ''}
+                        
+                        <span class="text-4xl">${c.icon}</span>
+                        <h3 class="font-display text-xl font-bold text-rose-800 mt-2">${c.name}</h3>
+                        <p class="text-sm text-gray-600 h-16">${c.effect}</p>
+                        <button onclick="activateCard('${c.id}')" class="w-full mt-3 ${isActive ? 'btn-secondary' : 'btn-primary'} px-4 py-2 rounded-lg font-semibold text-sm" ${isDepleted && !isActive ? 'disabled' : ''}>
+                            <!-- MODIFIÉ: Logique du bouton -->
+                            ${isActive ? 'Activée' : (isDepleted ? 'Épuisé' : 'Activer')}
+                        </button>
+                    </div>
+                `;
+            });
+        }
+        
+        function renderJokers() {
+            const grid = document.getElementById('jokers-grid');
+            grid.innerHTML = '';
+            activePlayerState.jokers.forEach(j => {
+                const quantity = j.quantity; // NOUVEAU
+                const isDepleted = j.quantity === 0; // MODIFIÉ
+                const isActive = activePlayerState.activeJoker === j.id;
+                
+                grid.innerHTML += `
+                    <div class="p-4 bg-white rounded-xl shadow-lg border ${isActive ? 'border-yellow-500 ring-2 ring-yellow-300' : 'border-rose-100'} ${isDepleted ? 'opacity-50' : ''} relative">
+                        <!-- NOUVEAU: Badge de Quantité -->
+                        ${quantity > 0 ? `<span class="absolute top-2 right-2 bg-secondary text-rose-900 text-xs font-bold px-2 py-1 rounded-full z-10">x${quantity}</span>` : ''}
+
+                        <span class="text-4xl">${j.icon}</span>
+                        <h3 class="font-display text-xl font-bold text-rose-800 mt-2">${j.name}</h3>
+                        <p class="text-sm text-gray-600 h-16">${j.effect}</p>
+                        <button onclick="activateJoker('${j.id}')" class="w-full mt-3 ${isActive ? 'btn-secondary' : 'btn-primary'} px-4 py-2 rounded-lg font-semibold text-sm" ${isDepleted && !isActive ? 'disabled' : ''}>
+                            <!-- MODIFIÉ: Logique du bouton -->
+                            ${isActive ? 'Activé' : (isDepleted ? 'Épuisé' : 'Activer')}
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        // --- Fonctions de Logique (Mission, Score) ---
+
+        // NOUVEAU: Rendu du Briefing
+        function renderBriefing() {
+            if (!globalState.ongoingMissionId) {
+                // S'il n'y a pas de mission, on ne devrait pas être ici. Retour.
+                showView('home');
+                return;
+            }
+            
+            const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+            
+            document.getElementById('briefing-title').innerText = `${mission.id}: ${mission.theme}`;
+            document.getElementById('briefing-description').innerText = mission.description;
+            document.getElementById('briefing-mode').innerText = mission.mode;
+            document.getElementById('briefing-mode-explanation').innerText = modeExplanations[mission.mode] || "Vivez ce moment comme vous le sentez !";
+        }
+        
+        // NOUVEAU: Fonction pour la vue "Mission en Cours"
+        function renderOngoingMission() {
+            const noMissionDiv = document.getElementById('no-ongoing-mission');
+            const missionContentDiv = document.getElementById('ongoing-mission-content');
+            
+            if (!globalState.ongoingMissionId) {
+                // Pas de mission en cours
+                noMissionDiv.classList.remove('hidden');
+                missionContentDiv.classList.add('hidden');
+                contextMissionId = null;
+            } else {
+                // Une mission est en cours
+                noMissionDiv.classList.add('hidden');
+                missionContentDiv.classList.remove('hidden');
+                
+                contextMissionId = globalState.ongoingMissionId; // Mettre à jour le contexte
+                const mission = globalState.sharedMissions.find(m => m.id === contextMissionId);
+                
+                document.getElementById('mission-ongoing-title').innerText = `${mission.id}: ${mission.theme}`;
+                document.getElementById('mission-ongoing-mode').innerText = mission.mode;
+                // NOUVEL AJOUT
+                document.getElementById('mission-ongoing-mode-explanation').innerText = modeExplanations[mission.mode] || "Vivez ce moment comme vous le sentez !";
+                
+                document.getElementById('mission-ongoing-description').innerText = mission.description;
+                document.getElementById('mission-ongoing-photo-preview').src = mission.photo || 'https://placehold.co/600x400/FADADD/8B4513?text=Ajouter+une+photo';
+                
+                const noteEl = document.getElementById('mission-ongoing-note');
+                noteEl.value = mission.note;
+                // Mettre à jour le state en temps réel
+                noteEl.oninput = (e) => { mission.note = e.target.value; };
+
+                // Mettre à jour les bonus actifs
+                const bonusContainer = document.getElementById('ongoing-mission-bonuses');
+                bonusContainer.innerHTML = '';
+                let hasBonus = false;
+
+                if (activePlayerState.activeCard) {
+                    const card = activePlayerState.cards.find(c => c.id === activePlayerState.activeCard);
+                    if (card) {
+                        bonusContainer.innerHTML += `
+                            <div class="flex items-center gap-2 text-green-700 font-semibold">
+                                <span class="text-2xl">${card.icon}</span>
+                                <span>Carte active: ${card.name}</span>
+                            </div>
+                        `;
+                        hasBonus = true;
+                    }
+                }
+                
+                if (activePlayerState.activeJoker) {
+                    const joker = activePlayerState.jokers.find(j => j.id === activePlayerState.activeJoker);
+                    if (joker) {
+                        bonusContainer.innerHTML += `
+                            <div class="flex items-center gap-2 text-blue-700 font-semibold">
+                                <span class="text-2xl">${joker.icon}</span>
+                                <span>Joker actif: ${joker.name}</span>
+                            </div>
+                        `;
+                        hasBonus = true;
+                    }
+                }
+
+                if (!hasBonus) {
+                    bonusContainer.innerHTML = '<p class="text-sm text-gray-500 italic">Aucun bonus actif pour cette mission.</p>';
+                }
+            }
+        }
+        
+        // C'est la vitrine (clic depuis la Timeline)
+        function showMissionDetail(missionId) {
+            
+            // --- NOUVELLE LOGIQUE POUR LE JOKER DESTIN ---
+            if (globalState.destinMode) {
+                const mission = globalState.sharedMissions.find(m => m.id === missionId);
+                
+                // C-1: Mission en cours, on bloque
+                if (mission.status === 'inprogress') {
+                    showModal('Mission Bloquée', 'Cette mission est déjà en cours.', '🤷‍♀️');
+                    return; // Ne rien faire
+                }
+
+                // C-2: Mission "À Faire" ou "Faite" (NOUVELLE LOGIQUE DE PRÉVISUALISATION)
+                if (mission.status === 'todo' || mission.status === 'done') {
+                    
+                    const joker = activePlayerState.jokers.find(j => j.id === 'destin');
+                    if (joker.quantity === 0) {
+                         showModal('Oups !', 'Vous n\'avez plus de joker Destin.', '😥');
+                         globalState.destinMode = false; // Désactiver le mode
+                         return;
+                    }
+                    
+                    // NOUVEAU: Ouvre le modal de confirmation au lieu de lancer
+                    globalState.destinMissionIdToConfirm = mission.id;
+                    document.getElementById('destin-modal-title').innerText = `${mission.id}: ${mission.theme}`;
+                    document.getElementById('destin-modal-description').innerText = mission.description;
+                    document.getElementById('destin-confirmation-modal').classList.remove('hidden');
+                    return; // Stoppe l'exécution ici
+                }
+            }
+            // --- FIN DE LA LOGIQUE DESTIN ---
+
+            // --- Code original (Vitrine) ---
+            contextMissionId = missionId; // Mettre à jour le contexte
+            const mission = globalState.sharedMissions.find(m => m.id === missionId);
+            
+            document.getElementById('mission-title').innerText = `${mission.id}: ${mission.theme}`;
+            document.getElementById('mission-description').innerText = mission.description;
+            document.getElementById('mission-photo-preview').src = mission.photo || 'https://placehold.co/600x400/FADADD/8B4513?text=Ajouter+une+photo';
+            document.getElementById('mission-mode').innerText = mission.mode || "Non défini";
+            
+            const noteEl = document.getElementById('mission-note');
+            noteEl.value = mission.note;
+            // Mettre à jour le state en temps réel
+            noteEl.oninput = (e) => { mission.note = e.target.value; };
+
+            // Boutons de statut (visuel seulement)
+            const statusContainer = document.getElementById('mission-status-buttons');
+            statusContainer.innerHTML = '';
+            // MODIFIÉ: Ne montre plus "todo"
+            if (mission.status === 'inprogress') {
+                statusContainer.innerHTML += `<button class="px-4 py-2 rounded-lg font-semibold text-sm bg-rose-200 text-rose-700" disabled>En Cours</button>`;
+            } else if (mission.status === 'done') {
+                statusContainer.innerHTML += `<button class="px-4 py-2 rounded-lg font-semibold text-sm bg-yellow-300 text-rose-800" disabled>Fait !</button>`;
+            }
+            
+            // Le bouton "Noter" est caché par défaut dans le HTML
+            showView('mission');
+        }
+        window.showMissionDetail = showMissionDetail;
+        
+        // NOUVELLE FONCTION: Confirmation du Joker Destin
+        function confirmDestinMission() {
+            const missionId = globalState.destinMissionIdToConfirm;
+            if (!missionId) return;
+            
+            const mission = globalState.sharedMissions.find(m => m.id === missionId);
+            const joker = activePlayerState.jokers.find(j => j.id === 'destin');
+
+            // Logique de lancement (copiée de l'ancienne fonction showMissionDetail)
+            let logMessage = `a utilisé le joker Destin pour choisir : ${mission.id}: ${mission.theme}.`;
+            let modalMessage = `Votre nouvelle mission est ${mission.id}: ${mission.theme}. Allez dans "Mission enCours" pour la commencer.`;
+            let briefingMode = 'Destin 🔮';
+
+            // Si la mission était "Faite", on la réinitialise
+            if (mission.status === 'done') {
+                if (mission.photo) {
+                    addPhotoToGallery(mission, "Ancien souvenir (avant Joker Destin 🔮)");
+                }
+                
+                // MODIFIÉ: Correctif pour les missions B★
+                const template = missionTemplates.find(t => t.id === missionId);
+                mission.photo = null;
+                mission.note = '';
+                mission.score = 0;
+                mission.completedBy = null;
+                // Réinitialise la description seulement si ce n'est pas une mission bonus
+                if (template) {
+                    mission.description = template.description; 
+                }
+                logMessage = `a utilisé le joker Destin pour **refaire** : ${mission.id}: ${mission.theme}.`;
+                modalMessage = `Vous avez choisi de **refaire** la mission ${mission.id}: ${mission.theme}. Elle est réinitialisée et prête dans "Mission en Cours".`;
+            }
+
+            // Lancement de la mission
+            playSound('reward');
+            globalState.ongoingMissionId = mission.id;
+            mission.status = 'inprogress';
+            mission.mode = briefingMode; // Mode spécial
+            globalState.destinMode = false; // Désactiver le mode
+            joker.quantity--; // Consomme le joker
+            
+            logAction(activePlayerState.name, '🔮', logMessage);
+            
+            closeDestinConfirmationModal(); // Ferme le modal de confirmation
+            
+            showModal(
+                'Mission Choisie !',
+                modalMessage, // Message mis à jour
+                '🔮',
+                () => showView('mission-briefing') // VA AU BRIEFING
+            );
+            renderJokers(); // Mettre à jour l'UI des jokers
+            globalState.destinMissionIdToConfirm = null; // Nettoyer
+        }
+        window.confirmDestinMission = confirmDestinMission;
+        
+        // NOUVELLE FONCTION: Fermer le modal de confirmation Destin
+        function closeDestinConfirmationModal() {
+            playSound('click');
+            globalState.destinMissionIdToConfirm = null; // Nettoyer
+            document.getElementById('destin-confirmation-modal').classList.add('hidden');
+        }
+        window.closeDestinConfirmationModal = closeDestinConfirmationModal;
+
+        // NOUVELLE FONCTION: Fermer le modal de confirmation Orga
+        function closeOrgaConfirmationModal() {
+            playSound('click');
+            document.getElementById('orga-confirmation-modal').classList.add('hidden');
+        }
+        window.closeOrgaConfirmationModal = closeOrgaConfirmationModal;
+
+        // NOUVELLE FONCTION: Confirmation du Joker Orga
+        function confirmCancelMission() {
+            playSound('click');
+            const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+            const joker = activePlayerState.jokers.find(j => j.id === 'orga');
+
+            joker.quantity--; // 1. Consommer le joker
+            logAction(activePlayerState.name, joker.icon, `a utilisé le joker Organisation pour annuler la mission : ${mission.theme}.`); // 2. Logger
+
+            // 3. Réinitialiser la mission
+            mission.status = 'todo';
+            mission.mode = null; // Nettoyer le mode
+            
+            // 4. Nettoyer l'état global
+            globalState.ongoingMissionId = null;
+            contextMissionId = null;
+
+            renderJokers(); // 5. Mettre à jour l'UI des jokers
+            closeOrgaConfirmationModal(); // 6. Fermer le modal
+            showModal(
+                'Mission Annulée',
+                'La mission a été annulée et le joker consommé. Vous pouvez lancer une nouvelle mission.',
+                '🕯️',
+                () => showView('home') // 7. Retour à l'accueil
+            );
+        }
+        window.confirmCancelMission = confirmCancelMission;
+
+        // NOUVELLE FONCTION: Fermer le modal de confirmation Switch
+        function closeSwitchConfirmationModal() {
+            playSound('click');
+            document.getElementById('switch-confirmation-modal').classList.add('hidden');
+        }
+        window.closeSwitchConfirmationModal = closeSwitchConfirmationModal;
+
+        // NOUVELLE FONCTION: Confirmation de la Carte Switch
+        function confirmSwitchMission() {
+            // playSound('click'); // CORRECTION: Supprimé pour éviter le double son
+            const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+            const card = activePlayerState.cards.find(c => c.id === 'switch');
+
+            if (mission.mode.includes('Perla 💃🏻')) {
+                mission.mode = 'Romain 🕺🏻';
+                globalState.lastAlternancePlayer = 'perla'; 
+                card.quantity--;
+                logAction(activePlayerState.name, '🎲', `a utilisé la carte Switch ! La mission est passée à Romain.`);
+                closeSwitchConfirmationModal();
+                showModal('Switch !', 'La mission est maintenant assignée à Romain !', '🎲', () => {
+                    showView('home');
+                });
+            } else if (mission.mode.includes('Romain 🕺🏻')) {
+                mission.mode = 'Perla 💃🏻';
+                globalState.lastAlternancePlayer = 'romain'; 
+                card.quantity--;
+                logAction(activePlayerState.name, '🎲', `a utilisé la carte Switch ! La mission est passée à Perla.`);
+                closeSwitchConfirmationModal();
+                showModal('Switch !', 'La mission est maintenant assignée à Perla !', '🎲', () => {
+                    showView('home');
+                });
+            }
+            
+            if (globalState.currentView === 'ongoing-mission') {
+                renderOngoingMission();
+            }
+            renderCards(); // Re-render la liste des cartes
+        }
+        window.confirmSwitchMission = confirmSwitchMission;
+
+        // NOUVELLE FONCTION: Fermer le modal Secret Love
+        function closeSecretLoveModal() {
+            playSound('click');
+            document.getElementById('secret-love-modal').classList.add('hidden');
+        }
+        window.closeSecretLoveModal = closeSecretLoveModal;
+        
+        // NOUVELLE FONCTION: Confirmer la mission Secret Love
+        // MODIFICATION MAJEURE: Ne crée plus de mission, donne 15 points.
+        function confirmSecretMission() {
+            const title = document.getElementById('secret-mission-title').value;
+            const description = document.getElementById('secret-mission-description').value;
+            const date = document.getElementById('secret-mission-date').value; // NOUVEL AJOUT
+            
+            if (!title || !description) {
+                showModal('Oups !', 'Vous devez remplir un titre et une description pour votre mission secrète.', '😥');
+                return;
+            }
+
+            // 1. Consommer la carte
+            const card = activePlayerState.cards.find(c => c.id === 'secret');
+            if (card.quantity === 0) { // Double vérification
+                showModal('Erreur', 'Vous n\'avez plus de carte Secret Love.', '😥');
+                return;
+            }
+            card.quantity--;
+
+            // 2. Ajouter 15 points
+            activePlayerState.lovePoints += 15;
+            
+            // 3. Logger l'action (en gardant le secret)
+            // MODIFIÉ: Ajout de la date au message
+            let logMessage = `a organisé une mission "Secret Love" ! (+15 💕)`;
+            if (date) {
+                // Formate la date pour être plus lisible
+                const formattedDate = new Date(date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+                logMessage = `a organisé une mission "Secret Love" pour le ${formattedDate} ! (+15 💕)`;
+            }
+            logAction(activePlayerState.name, '🌈', logMessage, 'log', null);
+            
+            // 4. Confirmer et retourner à l'accueil
+            closeSecretLoveModal();
+            showModal(
+                'Mission Secrète Réussie !',
+                `Vous gagnez 15 💕 ! Votre partenaire verra l'action dans la Boîte aux Lettres.`,
+                '🌈',
+                () => showView('home') // Aller à l'accueil
+            );
+            
+            renderCards(); // Mettre à jour l'UI des cartes
+        }
+        window.confirmSecretMission = confirmSecretMission;
+
+
+        // N'est plus utilisé, mais on le garde au cas où
+        function updateMissionStatus(missionId, status) {
+            playSound('click');
+            const mission = globalState.sharedMissions.find(m => m.id === missionId);
+            mission.status = status;
+            showMissionDetail(missionId); // Re-render
+        }
+        window.updateMissionStatus = updateMissionStatus;
+        
+        function previewMissionPhoto(event) {
+            const file = event.target.files[0];
+            if (file && contextMissionId) { // Utilise le helper de contexte
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgUrl = e.target.result;
+                    // Mettre à jour la mission dans le state
+                    const mission = globalState.sharedMissions.find(m => m.id === contextMissionId);
+                    mission.photo = imgUrl;
+                    
+                    // Mettre à jour uniquement la vue "en cours" (CORRIGÉ)
+                    const previewOngoing = document.getElementById('mission-ongoing-photo-preview');
+                    if (previewOngoing) previewOngoing.src = imgUrl;
+                }; // <-- FIN DE reader.onload
+                reader.readAsDataURL(file);
+            }
+        } // <-- FIN DE previewMissionPhoto
+        window.previewMissionPhoto = previewMissionPhoto;
+
+        // --- Logique de Rating (Étoiles) ---
+        function setRating(criteria, value) {
+            playSound('click');
+            activePlayerState.scoring[criteria] = value;
+            
+            // CORRECTION: Logique simplifiée et robuste avec les nouveaux IDs
+            const parentDiv = document.getElementById(`stars-${criteria}`);
+            
+            if(parentDiv) {
+                parentDiv.querySelectorAll('span').forEach(star => {
+                    if (parseInt(star.dataset.value) <= value) {
+                        star.classList.remove('opacity-30');
+                    } else {
+                        star.classList.add('opacity-30');
+                    }
+                });
+            }
+        }
+        window.setRating = setRating;
+        
+        // --- Logique de Scoring ---
+        
+        function setupScoring() {
+            activePlayerState.scoring = { creativite: 0, effort: 0, complicite: 0 };
+            document.querySelectorAll('#view-score [data-value]').forEach(star => star.classList.add('opacity-30'));
+            document.querySelectorAll('#view-score input[type="checkbox"]').forEach(check => check.checked = false);
+            
+            const bonusInfo = document.getElementById('score-bonus-info');
+            bonusInfo.innerHTML = '';
+            if (activePlayerState.activeJoker === 'bonus') {
+                bonusInfo.innerHTML += '<p class="text-green-600">Joker Bonus +3 appliqué ! 💎</p>';
+            }
+            if (activePlayerState.activeCard === 'double') {
+                bonusInfo.innerHTML += '<p class="text-green-600">Carte Double Point appliquée ! 💌</p>';
+            }
+        }
+        
+        // NOUVEAU: Fonction pour y accéder depuis "Mission en Cours"
+        function goToScoringFromOngoing() {
+            const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+            if (mission.status === 'done') {
+                showModal('Déjà Fait', 'Cette mission a déjà été notée.', '😅');
+                return;
+            }
+            setupScoring();
+            showView('score');
+        }
+        window.goToScoringFromOngoing = goToScoringFromOngoing;
+        
+        // N'est plus utilisé, mais on le garde au cas où
+        function showScoringScreen() {
+            const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+            if (mission.status === 'done') {
+                showModal('Déjà Fait', 'Cette mission a déjà été notée.', '😅');
+                return;
+            }
+            setupScoring();
+            showView('score');
+        }
+        window.showScoringScreen = showScoringScreen;
+        
+        function calculateScore() {
+            // Utilise l'ID global de la mission en cours
+            const missionId = globalState.ongoingMissionId;
+            if (!missionId) {
+                showModal('Erreur', 'Aucune mission en cours à noter.', '🤷‍♀️');
+                showView('home');
+                return;
+            }
+
+            let baseScore = activePlayerState.scoring.creativite + activePlayerState.scoring.effort + activePlayerState.scoring.complicite;
+            let bonusScore = 0;
+            
+            if (document.getElementById('bonus-photo').checked) bonusScore += 1;
+            if (document.getElementById('bonus-surprise').checked) bonusScore += 1;
+            if (document.getElementById('bonus-ambiance').checked) bonusScore += 2;
+            if (document.getElementById('bonus-twist').checked) bonusScore += 2;
+            if (document.getElementById('bonus-express').checked) bonusScore += 1;
+            
+            let totalScore = baseScore + bonusScore;
+            
+            // Appliquer Joker +3
+            if (activePlayerState.activeJoker === 'bonus') {
+                const joker = activePlayerState.jokers.find(j => j.id === 'bonus');
+                // MODIFIÉ: Vérifie la quantité
+                if (joker && joker.quantity > 0) {
+                    totalScore += 3;
+                    joker.quantity--; // Décrémente
+                    logAction(activePlayerState.name, joker.icon, `a utilisé le joker ${joker.name}.`);
+                }
+                activePlayerState.activeJoker = null;
+            }
+            
+            // Appliquer Carte Double Point
+            if (activePlayerState.activeCard === 'double') {
+                const card = activePlayerState.cards.find(c => c.id === 'double');
+                // MODIFIÉ: Vérifie la quantité
+                if (card && card.quantity > 0) {
+                    totalScore *= 2;
+                    card.quantity--; // Décrémente
+                    logAction(activePlayerState.name, card.icon, `a utilisé la carte ${card.name}.`);
+                }
+                activePlayerState.activeCard = null;
+            }
+            
+            // Mettre à jour la mission (sur la timeline partagée)
+            const mission = globalState.sharedMissions.find(m => m.id === missionId);
+            mission.score = totalScore;
+            mission.status = 'done';
+            // Lit la note depuis la vue "en cours"
+            mission.note = document.getElementById('mission-ongoing-note').value;
+            mission.completedBy = activePlayerState.name; 
+            
+            // NOUVEL AJOUT: Sauvegarder la photo dans la galerie
+            if (mission.photo) {
+                addPhotoToGallery(mission);
+            }
+            
+            // Mettre à jour la banque (personnelle)
+            activePlayerState.lovePoints += totalScore;
+            
+            playSound('point');
+            
+            // NOUVEAU: Log d'action
+            logAction(activePlayerState.name, '🧮', `a terminé la mission ${mission.id} et a gagné ${totalScore} 💕.`);
+
+            // Réinitialiser la mission en cours
+            globalState.ongoingMissionId = null;
+            contextMissionId = null;
+
+            // Afficher modal de score
+            showModal('Score Enregistré !', `Vous gagnez ${totalScore} 💕 ! Votre nouveau solde est de ${activePlayerState.lovePoints} 💕.`, '💖');
+            
+            // Retour à l'accueil
+            showView('home');
+        }
+        window.calculateScore = calculateScore;
+
+        // --- Logique Cartes & Jokers ---
+        
+        function activateCard(cardId) {
+            playSound('click');
+            const card = activePlayerState.cards.find(c => c.id === cardId);
+            
+            // MODIFIÉ: Permet de désactiver, mais pas d'activer si épuisé
+            if (card.quantity === 0 && cardId !== activePlayerState.activeCard) return; 
+
+            // --- LOGIQUE "SWITCH" ---
+            if (cardId === 'switch') {
+                if (!globalState.ongoingMissionId) {
+                    showModal('Oups !', 'Vous devez être dans une mission pour utiliser cette carte.', '😅');
+                    return;
+                }
+                const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+
+                // MODIFIÉ: Vérifie si c'est bien un tour à tour
+                if (!mission.mode.includes('Perla 💃🏻') && !mission.mode.includes('Romain 🕺🏻')) {
+                    showModal('Oups !', 'Cette carte ne fonctionne que sur les missions "Tour à Tour".', '😥');
+                    return; // Ne pas utiliser la carte
+                }
+                
+                // MODIFIÉ: Ouvre le modal de confirmation au lieu d'exécuter
+                document.getElementById('switch-modal-mission-theme').innerText = `"${mission.theme}"`;
+                document.getElementById('switch-confirmation-modal').classList.remove('hidden');
+
+                return; // Important: on sort, on attend la confirmation
+            }
+            // --- FIN LOGIQUE "SWITCH" ---
+            
+            
+            // --- LOGIQUE "COEUR" ---
+            if (cardId === 'coeur') {
+                if (!globalState.ongoingMissionId) {
+                    showModal('Oups !', 'Vous devez être dans une mission pour utiliser cette carte.', '😅');
+                    return;
+                }
+                // const card = activePlayerState.cards.find(c => c.id === 'coeur'); // Déjà trouvé
+                if (card.quantity === 0) return; // MODIFIÉ
+                
+                // C'est une action immédiate, on va à l'écran d'écriture
+                showView('love-letter', false); 
+                return; // Sortir de la fonction
+            }
+            // --- FIN LOGIQUE "COEUR" ---
+            
+            // --- NOUVELLE LOGIQUE "STEAL MY HEART" ---
+            if (cardId === 'steal') {
+                // const card = activePlayerState.cards.find(c => c.id === 'steal'); // Déjà trouvé
+                if (card.quantity === 0) return; // MODIFIÉ
+
+                const victimName = globalState.currentPlayer === 'perla' ? 'romain' : 'perla';
+                const victimState = globalState.players[victimName];
+                const rewardsToSteal = victimState.purchasedRewards.filter(r => !r.consumed);
+
+                if (rewardsToSteal.length === 0) {
+                    showModal('Oups !', `Votre partenaire (${victimState.name}) n'a aucune récompense à voler pour le moment.`, '🤷‍♀️');
+                    return;
+                }
+                
+                // Préparer et afficher la vue de vol
+                const listContainer = document.getElementById('steal-reward-list');
+                listContainer.innerHTML = '';
+                rewardsToSteal.forEach(r => {
+                    listContainer.innerHTML += `
+                        <button onclick="stealReward(${r.id}, '${victimName}')" class="btn-primary w-full p-4 rounded-lg text-left font-semibold">
+                            ${r.name}
+                        </button>
+                    `;
+                });
+                
+                showView('steal-reward', false); // MODIFIÉ: playNavSound = false
+                return; // Sortir de la fonction
+            }
+            // --- FIN LOGIQUE "STEAL" ---
+            
+            // --- NOUVELLE LOGIQUE "SECRET LOVE" ---
+            // CORRECTION: Bloc dupliqué et if non fermé supprimés
+            if (cardId === 'secret') {
+                // MODIFIÉ: Logique pour ouvrir le formulaire
+                /* == BLOCAGE RETIRÉ ==
+                   Le 'if' suivant est commenté pour vous permettre d'utiliser
+                   la carte Secret Love même si une mission est en cours.
+                
+                if (globalState.ongoingMissionId) {
+                    showModal('Oups !', 'Terminez votre mission en cours avant d\'en créer une nouvelle.', '😅');
+                    return;
+                }
+                */
+                if (card.quantity === 0) {
+                     return; // Déjà épuisé
+                }
+                
+                // Ouvre le formulaire de création
+                document.getElementById('secret-mission-title').value = '';
+                document.getElementById('secret-mission-description').value = '';
+                document.getElementById('secret-love-modal').classList.remove('hidden');
+                
+                // La carte sera consommée à la validation du formulaire
+                return; // Sortir
+            }
+            // --- FIN LOGIQUE "SECRET LOVE" ---
+
+
+            // Logique pour les autres cartes (toggle)
+            if (activePlayerState.activeCard === cardId) {
+                activePlayerState.activeCard = null;
+            } else {
+                activePlayerState.activeCard = cardId;
+                // 'coeur', 'steal' et 'secret' sont retirés de cette liste
+                if (cardId === 'double') { 
+                    // ... (logique 'double')
+                }
+            }
+            renderCards(); 
+        }
+        window.activateCard = activateCard;
+        
+        // --- NOUVELLE FONCTION: Logique de Vol ---
+        function stealReward(rewardId, victimName) {
+            playSound('reward');
+            
+            const victimState = globalState.players[victimName];
+            
+            // 1. Trouver et retirer la récompense de la victime
+            const rewardIndex = victimState.purchasedRewards.findIndex(r => r.id === rewardId);
+            if (rewardIndex === -1) {
+                showModal('Erreur', 'Cette récompense n\'existe plus.', '😥');
+                showView('home', false); // MODIFIÉ: playNavSound = false
+                return;
+            }
+            const [stolenReward] = victimState.purchasedRewards.splice(rewardIndex, 1);
+            
+            // 2. Ajouter la récompense au voleur
+            activePlayerState.purchasedRewards.push(stolenReward);
+            
+            // 3. Marquer la carte "Steal" comme utilisée
+            const stealCard = activePlayerState.cards.find(c => c.id === 'steal');
+            stealCard.quantity--; // MODIFIÉ
+            
+            // 4. Logger l'action
+            logAction(activePlayerState.name, '🔥', `a volé la récompense "${stolenReward.name}" à ${victimState.name} !`); // MODIFIÉ: Romain
+            
+            // 5. Confirmer et retourner à l'accueil
+            showModal(
+                'Vol Réussi !',
+                `Vous avez volé la récompense "${stolenReward.name}" ! Elle est maintenant dans votre inventaire.`,
+                '🔥',
+                () => showView('home')
+            );
+        }
+        window.stealReward = stealReward;
+
+        function activateJoker(jokerId) {
+            playSound('click');
+            const joker = activePlayerState.jokers.find(j => j.id === jokerId);
+            // MODIFIÉ: Permet de désactiver, mais pas d'activer si épuisé
+            if (joker.quantity === 0 && jokerId !== activePlayerState.activeJoker) return; 
+
+            if (jokerId === 'bonus') {
+                if (activePlayerState.activeJoker === jokerId) {
+                    activePlayerState.activeJoker = null;
+                } else {
+                    activePlayerState.activeJoker = jokerId;
+                }
+            } 
+            // NOUVELLE LOGIQUE POUR DESTIN
+            else if (jokerId === 'destin') {
+                if (globalState.ongoingMissionId) {
+                    showModal('Oups !', 'Terminez votre mission en cours avant d\'en choisir une nouvelle avec ce joker.', '😅');
+                    return;
+                }
+                
+                // NOUVEAU: Vérifier la quantité avant d'activer
+                if (joker.quantity === 0) {
+                    showModal('Oups !', 'Vous n\'avez plus de joker Destin.', '😥');
+                    return;
+                }
+                
+                // On n'utilise pas le joker tout de suite, seulement quand la mission est choisie
+                globalState.destinMode = true; // Activer le mode
+                logAction(activePlayerState.name, joker.icon, `active le joker ${joker.name}.`);
+                
+                showModal(
+                    'Mode Destin Activé !', 
+                    'Allez sur la Timeline (A→Z) et choisissez la mission que vous souhaitez lancer.', 
+                    '🔮',
+                    () => showView('timeline') // Naviguer vers la timeline
+                );
+            }
+            // FIN LOGIQUE DESTIN
+            // NOUVELLE LOGIQUE POUR 'ORGA'
+            else if (jokerId === 'orga') {
+                if (!globalState.ongoingMissionId) {
+                    showModal('Oups !', 'Vous devez avoir une mission en cours pour utiliser ce joker.', '😅');
+                    return; // Ne rien faire, ne pas consommer
+                }
+                
+                const mission = globalState.sharedMissions.find(m => m.id === globalState.ongoingMissionId);
+
+                // MODIFIÉ: Ouvre le modal de confirmation dédié
+                document.getElementById('orga-modal-mission-theme').innerText = `"${mission.theme}"`;
+                document.getElementById('orga-confirmation-modal').classList.remove('hidden');
+                
+                return; // Important: on sort, on attend la confirmation
+            }
+            // FIN LOGIQUE 'ORGA'
+            else { 
+                // Logique pour 'orga' (actuellement: consommer)
+                // showModal('Joker Activé', `Le joker ${joker.name} a été utilisé !`, '💎');
+                // joker.quantity--; 
+                // activePlayerState.activeJoker = null; 
+                // logAction(activePlayerState.name, joker.icon, `a utilisé le joker ${joker.name}.`); 
+                console.warn(`Joker non géré: ${jokerId}`);
+            }
+            renderJokers(); 
+        }
+        window.activateJoker = activateJoker;
+
+        // --- Logique de la Roue ---
+        
+        function setupWheels() {
+            const letterWheel = document.getElementById('wheel-letter');
+            const modeWheel = document.getElementById('wheel-mode');
+            
+            letterWheel.style.transition = 'none';
+            modeWheel.style.transition = 'none';
+            letterWheel.style.transform = 'translateY(0)';
+            modeWheel.style.transform = 'translateY(0)';
+            
+            document.getElementById('spin-button').classList.remove('hidden');
+
+            letterWheel.innerHTML = '';
+            // MODIFIÉ: N'affiche que les 26 lettres de base
+            const letters = missionTemplates.filter(m => !m.id.startsWith('B★')).map(m => m.id);
+            const repeatedLetters = [...letters, ...letters, ...letters]; 
+            repeatedLetters.forEach(letter => {
+                letterWheel.innerHTML += `<div class="wheel-item h-[50px]">${letter}</div>`;
+            });
+            
+            modeWheel.innerHTML = '';
+            const repeatedModes = [...gameModes, ...gameModes, ...gameModes, ...gameModes];
+            repeatedModes.forEach(mode => {
+                modeWheel.innerHTML += `<div class="wheel-item h-[50px]">${mode}</div>`;
+            });
+        }
+        
+        function spinWheels() {
+            playSound('click');
+            
+            if (globalState.ongoingMissionId) {
+                showModal('Oups !', 'Terminez votre mission en cours avant d\'en lancer une nouvelle.', '😅');
+                return;
+            }
+            
+            // MODIFIÉ: Ne compte que les 26 missions de base
+            const availableMissions = globalState.sharedMissions.filter(m => m.status !== 'done' && !m.id.startsWith('B★'));
+            if (availableMissions.length === 0) {
+                showModal('Bravo !', 'Vous avez complété toutes les missions A-Z ! Il est temps pour le Reset Love 🌹 (ou créez une mission "Secret Love" !)', '🎉');
+                return;
+            }
+            
+            const selectedMission = availableMissions[Math.floor(Math.random() * availableMissions.length)];
+            const selectedMode = gameModes[Math.floor(Math.random() * gameModes.length)];
+            
+            // LOGIQUE D'ALTERNANCE
+            let finalModeToSave = selectedMode;
+            
+            if (selectedMode === 'Tour à Tour') {
+                // MODIFIÉ: Romain + Icônes
+                if (globalState.lastAlternancePlayer === 'romain') {
+                    finalModeToSave = 'Perla 💃🏻';
+                    globalState.lastAlternancePlayer = 'perla';
+                } else {
+                    finalModeToSave = 'Romain 🕺🏻';
+                    globalState.lastAlternancePlayer = 'romain';
+                }
+            }
+            
+            // Sauver les choix
+            globalState.ongoingMissionId = selectedMission.id;
+            const mission = globalState.sharedMissions.find(m => m.id === selectedMission.id);
+            mission.status = 'inprogress';
+            mission.mode = finalModeToSave; 
+            
+            // Calculer l'arrêt de la roue
+            const letterWheel = document.getElementById('wheel-letter');
+            const modeWheel = document.getElementById('wheel-mode');
+            
+            // MODIFIÉ: Index basé sur les 26 lettres
+            const letterIndex = missionTemplates.findIndex(m => m.id === selectedMission.id) + 26; 
+            const letterPosition = -(letterIndex * 50) + 25; 
+            
+            const modeIndex = gameModes.indexOf(selectedMode) + (gameModes.length * 2); 
+            const modePosition = -(modeIndex * 50) + 25;
+            
+            // Appliquer la transition et le spin
+            letterWheel.style.transition = 'transform 3s cubic-bezier(0.33, 1, 0.68, 1)';
+            modeWheel.style.transition = 'transform 3.5s cubic-bezier(0.33, 1, 0.68, 1)'; 
+            
+            letterWheel.style.transform = `translateY(${letterPosition}px)`;
+            modeWheel.style.transform = `translateY(${modePosition}px)`;
+            
+            // NOUVELLE LOGIQUE: Montrer un modal et rediriger
+            document.getElementById('spin-button').classList.add('hidden');
+            setTimeout(() => {
+                playSound('reward'); 
+                logAction(activePlayerState.name, '🎲', `a lancé la mission ${mission.id}: ${mission.theme} (Mode: ${mission.mode})`);
+                
+                // MODIFIÉ: Redirige vers le briefing
+                showModal(
+                    'Mission Lancée !', 
+                    `Votre nouvelle mission est :\n${mission.id}: ${mission.theme}\n(Mode: ${mission.mode})`, 
+                    '🎲',
+                    () => showView('mission-briefing') // VA AU BRIEFING
+                );
+            }, 3500); // Après la fin du spin le plus long
+        }
+        window.spinWheels = spinWheels;
+        
+        // N'est plus utilisé
+        function startMissionFromWheel() {
+            showView('ongoing-mission');
+        }
+        window.startMissionFromWheel = startMissionFromWheel;
+        
+        // --- Envoyer la lettre d'amour ---
+        function sendLoveLetter() {
+            const text = document.getElementById('love-letter-text').value;
+            if (text.trim().length < 10) {
+                showModal('Oups !', 'Mettez-y un peu plus de cœur ! (10 caractères min)', '😥');
+                return;
+            }
+            
+            const missionId = globalState.ongoingMissionId;
+            const mission = globalState.sharedMissions.find(m => m.id === missionId);
+            const card = activePlayerState.cards.find(c => c.id === 'coeur');
+
+            // 1. Mettre à jour la mission
+            mission.note = "💌 Lettre d'Amour 💌\n\n" + text;
+            mission.status = 'done';
+            mission.score = 10; // Score fixe
+            mission.completedBy = activePlayerState.name;
+            mission.mode = "Lettre d'Amour 💌"; 
+            
+            // 2. Mettre à jour le joueur
+            activePlayerState.lovePoints += 10; // Points gagnés
+            card.quantity--; // MODIFIÉ
+            
+            // 3. Réinitialiser l'état global
+            globalState.ongoingMissionId = null;
+            contextMissionId = null;
+            
+            // 4. Confirmer et naviguer
+            playSound('reward');
+            // NOUVEAU: Log d'action (type 'letter')
+            logAction(activePlayerState.name, '💌', `a écrit une lettre d'amour pour remplacer la mission.`, 'letter', text);
+            
+            showModal(
+                'Lettre Envoyée !', 
+                'Vous gagnez 10 💕. Votre partenaire la découvrira dans la Boite aux Lettres.', // Message mis à jour
+                '💌', 
+                () => showView('home') // Retour à l'accueil
+            );
+        }
+        window.sendLoveLetter = sendLoveLetter;
+
+        // --- Logique Banque & Récompenses ---
+
+        function repurchaseJoker(jokerId) {
+            const cost = 40; 
+            if (activePlayerState.lovePoints < cost) {
+                showModal('Oups !', 'Points insuffisants.', '😥');
+                return;
+            }
+
+            const joker = activePlayerState.jokers.find(j => j.id === jokerId);
+            if (joker) {
+                joker.quantity++; // MODIFIÉ
+                activePlayerState.lovePoints -= cost; 
+                playSound('reward');
+                closeJokerRepurchaseModal();
+                logAction(activePlayerState.name, '💎', `a racheté le joker ${joker.name}.`); // NOUVEAU
+                showModal('Rachat Effectué', `Le joker ${joker.name} est à nouveau disponible ! (Total: x${joker.quantity})`, '💎');
+                renderBank(); 
+            }
+        }
+        window.repurchaseJoker = repurchaseJoker; 
+
+        // NOUVELLE FONCTION: Racheter une carte spécifique
+        function repurchaseCard(cardId) {
+            const cost = 20; // Coût défini dans la liste
+            if (activePlayerState.lovePoints < cost) {
+                showModal('Oups !', 'Points insuffisants.', '😥');
+                return;
+            }
+
+            const card = activePlayerState.cards.find(c => c.id === cardId);
+            if (card) {
+                card.quantity++; // MODIFIÉ
+                activePlayerState.lovePoints -= cost; 
+                playSound('reward');
+                closeCardRepurchaseModal();
+                logAction(activePlayerState.name, '🎴', `a racheté la carte ${card.name}.`);
+                showModal('Rachat Effectué', `La carte ${card.name} est à nouveau disponible ! (Total: x${card.quantity})`, '🎴'); // Message mis à jour
+                renderBank(); 
+            }
+        }
+        window.repurchaseCard = repurchaseCard; // Exposer
+
+        function buyReward(name, cost) {
+            if (activePlayerState.lovePoints < cost) {
+                showModal('Oups !', 'Points insuffisants pour acheter cette récompense.', '😥');
+                return;
+            }
+            
+            // On enlève les points TOUT DE SUITE, sauf pour les modals
+            if (!name.includes('Rachat')) {
+                activePlayerState.lovePoints -= cost;
+            }
+            
+            playSound('reward');
+
+            if (name.includes('Rachat de Carte')) {
+                
+                // NOUVELLE LOGIQUE: Ouvre le modal de sélection
+                // MODIFIÉ: Vérification de la quantité retirée
+                showCardRepurchaseModal(); // NOUVELLE FONCTION
+                return; // Stoppe buyReward ici
+
+            } else if (name.includes('Rachat de Joker')) {
+                // MODIFIÉ: Vérification de la quantité retirée
+                showJokerRepurchaseModal();
+                return; 
+            } else if (name.includes('Reset Love')) {
+                logAction(activePlayerState.name, '🌹', `s'apprête à valider le Reset Love...`); // NOUVEAU
+                showView('reset-love', false); // MODIFIÉ: playNavSound = false
+                return; 
+            } else {
+                // MODIFIÉ: Logique pour ajouter à l'inventaire
+                const newReward = {
+                    id: Date.now(), // ID unique
+                    name: name,
+                    cost: cost,
+                    consumed: false
+                };
+                activePlayerState.purchasedRewards.push(newReward);
+                
+                logAction(activePlayerState.name, '🎁', `a acheté la récompense : ${name}.`); // NOUVEAU
+                showModal('Récompense Achetée !', `Vous avez débloqué : ${name}. Elle est dans votre inventaire.`, '🎁');
+            }
+            
+            renderBank(); 
+        }
+        window.buyReward = buyReward;
+        
+        // --- NOUVELLE FONCTION: Gérer l'inventaire ---
+        function toggleRewardConsumed(rewardId) {
+            playSound('click');
+            const reward = activePlayerState.purchasedRewards.find(r => r.id === rewardId);
+            if (reward) {
+                reward.consumed = !reward.consumed; // Basculer l'état
+                if(reward.consumed) {
+                    // MODIFIÉ: Crée un log de type 'reward_request'
+                    logAction(activePlayerState.name, '🚩', `demande à utiliser la récompense : ${reward.name} !`, 'reward_request');
+                } else {
+                    // Optionnel: On pourrait logguer l'annulation si besoin
+                }
+            }
+            renderBank(); // Re-rendre la banque pour afficher le changement
+        }
+        window.toggleRewardConsumed = toggleRewardConsumed;
+
+        function tryShowResetLove() {
+            if(activePlayerState.lovePoints >= 100) {
+                showView('reset-love');
+            } else {
+                showModal('Pas encore !', `Continuez votre voyage ! Il vous manque ${100 - activePlayerState.lovePoints}💕 pour le Reset Love.`, '🌹');
+            }
+        }
+        window.tryShowResetLove = tryShowResetLove;
+
+        function completeResetLove() {
+            playSound('win');
+            
+            // NOUVEAU: Log d'action
+            logAction(activePlayerState.name, '🏆', `a complété le Reset Love ! Une nouvelle saison commence.`);
+
+            showModal(
+                `Félicitations ${activePlayerState.name} !`, 
+                'Vous avez complété votre Roroad to Love 💞. Une nouvelle saison commence, pleine de nouveaux souvenirs à créer.', 
+                '🎉'
+            );
+            
+            const playerName = globalState.currentPlayer;
+            // Réinitialise l'état du joueur
+            globalState.players[playerName] = createPlayerState(playerName);
+            activePlayerState = globalState.players[playerName];
+            
+            // Réinitialise l'état partagé (sauf le log)
+            globalState.sharedMissions = JSON.parse(JSON.stringify(missionTemplates));
+            globalState.ongoingMissionId = null; 
+            globalState.lastAlternancePlayer = 'romain'; // MODIFIÉ: Romain
+            // La galerie (photoGallery) et le log (actionLog) NE SONT PAS réinitialisés
+            
+            showView('home', false); // MODIFIÉ: playNavSound = false
+        }
+        window.completeResetLove = completeResetLove;
+
+        // --- NOUVELLE FONCTION DE NAVIGATION RETOUR ---
+        function goBack() {
+            // MODIFIÉ: Utilise la vue précédente mémorisée
+            const targetView = globalState.previousView || 'home';
+            showView(targetView);
+        }
+        window.goBack = goBack;
+
+        // --- NOUVELLE FONCTION: Traiter une demande de récompense ---
+        function processRewardRequest(logId) {
+            playSound('click');
+            const logEntry = globalState.actionLog.find(item => item.id === logId);
+            if (logEntry && !logEntry.processed) {
+                logEntry.processed = true;
+                // Ajoute une confirmation dans le log
+                logAction(activePlayerState.name, '✅', `a traité la demande : "${logEntry.message}"`);
+                renderMailbox(); // Re-render la boîte
+            }
+        }
+        window.processRewardRequest = processRewardRequest;
+
+        // NOUVELLE FONCTION: Ajout à la galerie
+        function addPhotoToGallery(mission, noteOverride = null) {
+             globalState.photoGallery.push({
+                id: Date.now(),
+                src: mission.photo,
+                missionId: mission.id,
+                theme: mission.theme,
+                note: noteOverride || mission.note || `Souvenir de la mission ${mission.theme}`
+            });
+        }
+
+        // --- NOUVELLE FONCTION: Log d'Action ---
+        function logAction(player, icon, message, type = 'log', letterContent = null) {
+            const logEntry = {
+                id: Date.now(), // NOUVEAU: ID unique pour chaque entrée
+                timestamp: new Date().toLocaleString('fr-FR', { day:'2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }),
+                player: player,
+                icon: icon,
+                message: message,
+                type: type,
+                letterContent: letterContent
+            };
+            
+            // NOUVEAU: Ajoute un statut aux demandes de récompense
+            if (type === 'reward_request') {
+                logEntry.processed = false;
+            }
+            
+            // unshift() ajoute au début du tableau (plus récent en haut)
+            globalState.actionLog.unshift(logEntry);
+        }
+
+        // --- Fonctions Modale ---
+        
+        function showModal(title, message, icon, onFermerCallback = null) { 
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('modal-icon').innerText = icon;
+            onModalCloseCallback = onFermerCallback; 
+            document.getElementById('modal-overlay').classList.remove('hidden');
+        }
+
+        function showJokerRepurchaseModal() {
+            const list = document.getElementById('joker-repurchase-list');
+            list.innerHTML = '';
+            // MODIFIÉ: Affiche tous les jokers, pas seulement ceux à 0
+            const allJokers = activePlayerState.jokers; 
+
+            if (allJokers.length === 0) { // Ne devrait jamais arriver
+                showModal('Oups !', 'Erreur, aucun joker trouvé.', '🤷‍♀️');
+                return;
+            }
+            
+            allJokers.forEach(joker => {
+                list.innerHTML += `
+                    <button onclick="repurchaseJoker('${joker.id}')" class="btn-primary w-full p-3 rounded-lg flex items-center gap-3 hover:bg-rose-200">
+                        <span class="text-3xl">${joker.icon}</span>
+                        <!-- NOUVEAU: Affiche la quantité actuelle -->
+                        <span class="font-semibold text-left">${joker.name} (Actuel: x${joker.quantity})</span>
+                    </button>
+                `;
+            });
+
+            document.getElementById('joker-repurchase-modal').classList.remove('hidden'); // CORRECTION: .add('hidden') -> .remove('hidden')
+        }
+
+        // NOUVELLE FONCTION: Montre le modal de rachat de carte
+        function showCardRepurchaseModal() {
+            const list = document.getElementById('card-repurchase-list');
+            list.innerHTML = '';
+            // MODIFIÉ: Affiche toutes les cartes, pas seulement celles à 0
+            const allCards = activePlayerState.cards; 
+
+            if (allCards.length === 0) { // Ne devrait jamais arriver
+                showModal('Oups !', 'Erreur, aucune carte trouvée.', '🤷‍♀️');
+                return;
+            }
+            
+            allCards.forEach(card => {
+                list.innerHTML += `
+                    <button onclick="repurchaseCard('${card.id}')" class="btn-primary w-full p-3 rounded-lg flex items-center gap-3 hover:bg-rose-200">
+                        <span class="text-3xl">${card.icon}</span>
+                        <!-- NOUVEAU: Affiche la quantité actuelle -->
+                        <span class="font-semibold text-left">${card.name} (Actuel: x${card.quantity})</span>
+                    </button>
+                `;
+            });
+
+            document.getElementById('card-repurchase-modal').classList.remove('hidden');
+        }
+
+        function closeJokerRepurchaseModal() {
+            playSound('click');
+            document.getElementById('joker-repurchase-modal').classList.add('hidden');
+        }
+        window.closeJokerRepurchaseModal = closeJokerRepurchaseModal; 
+        
+        // NOUVELLE FONCTION: Ferme le modal de rachat de carte
+        function closeCardRepurchaseModal() {
+            playSound('click');
+            document.getElementById('card-repurchase-modal').classList.add('hidden');
+        }
+        window.closeCardRepurchaseModal = closeCardRepurchaseModal; 
+        
+        
+        // --- Démarrage de l'application ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('modal-close-btn').addEventListener('click', () => {
+                // playSound('click'); // CORRECTION: Supprimé pour éviter le double son
+                document.getElementById('modal-overlay').classList.add('hidden');
+                
+                if (onModalCloseCallback) {
+                    onModalCloseCallback();
+                    onModalCloseCallback = null; // Le réinitialiser
+                }
+            });
+
+            showView('login'); // Démarrer sur l'écran de login
+        });
+
+    </script>
+<script type="module">
+  // --- Variable globale ---
+  let globalState = {};
+  window.globalState = globalState;
+
+  // --- Import Firebase ---
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  // --- Configuration Firebase ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyAQOpAvX7SQXVxYbxN5jNd9BH5uYoGnyDM",
+    authDomain: "roroad-to-love.firebaseapp.com",
+    projectId: "roroad-to-love",
+    storageBucket: "roroad-to-love.firebasestorage.app",
+    messagingSenderId: "770468867129",
+    appId: "1:770468867129:web:8f6709b7205232d4d871e8"
+  };
+
+  // --- Initialisation ---
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // --- Identifiant partagé ---
+  const SHARED_DOC_ID = "perla_roro";
+
+  // --- Chargement en ligne ---
+  async function loadGameOnline() {
+    try {
+      const docRef = doc(db, "RoroadToLove", SHARED_DOC_ID);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        globalState = docSnap.data();
+        window.globalState = globalState;
+
+        // Active la surveillance automatique après le chargement
+        globalState = watchState(globalState);
+        window.globalState = globalState;
+
+        console.log("💞 Progression restaurée depuis le cloud !");
+        console.log("✅ Données chargées :", globalState);
+      } else {
+        console.warn("⚠️ Aucune sauvegarde trouvée (premier lancement).");
+      }
+    } catch (error) {
+      console.error("Erreur de chargement :", error);
+    }
+  }
+
+  // --- Connexion Firebase ---
+  signInAnonymously(auth).catch(console.error);
+
+  // --- Quand connecté, charger la progression ---
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) return;
+    console.log("Connecté à Firebase ✅", user.uid);
+    await loadGameOnline();
+    if (typeof renderAppFromState === "function") renderAppFromState();
+  });
+
+  // --- Fonction de sauvegarde en ligne ---
+  async function saveGameOnline() {
+    try {
+      const ref = doc(db, "RoroadToLove", SHARED_DOC_ID);
+      await setDoc(ref, globalState);
+      console.log("🌸 Sauvegarde en ligne réussie !");
+    } catch (e) {
+      console.error("Erreur de sauvegarde :", e);
+    }
+  }
+
+  // --- Sauvegarde automatique de tout changement du globalState ---
+  function watchState(state) {
+    return new Proxy(state, {
+      set(target, key, value) {
+        target[key] = value;
+        console.log(`💾 Changement détecté : ${key} =`, value);
+        saveGameOnline(); // auto-save dès qu’on modifie le state
+        return true;
+      }
+    });
+  }
+
+  // --- Applique la surveillance au démarrage ---
+  globalState = watchState(globalState);
+  window.globalState = globalState;
+
+  // Rendre disponible la fonction de rechargement
+  window.loadGameOnline = loadGameOnline;
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
