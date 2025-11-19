@@ -1031,24 +1031,31 @@
             };
         }
 
-        // Nouvel état global
-        let globalState = {
-            currentPlayer: null, // 'perla' ou 'romain'
-            currentView: 'login',
-            previousView: 'login', // NOUVEAU: Pour le bouton "retour"
-            destinMode: false, // NOUVEAU: Pour le joker Destin
-            destinMissionIdToConfirm: null, // NOUVEAU: Pour le modal de confirmation
-            tempSecretMissionPhoto: null, // NOUVEAU: Pour la mission secrète
-            ongoingMissionId: null, // ID de la mission en cours
-            lastAlternancePlayer: 'romain', // MODIFIÉ: Romain
-            actionLog: [], 
-            photoGallery: [], // NOUVEAU: Pour la galerie photo
-            sharedMissions: JSON.parse(JSON.stringify(missionTemplates)),
-            players: {
-                perla: createPlayerState("Perla"),
-                romain: createPlayerState("Romain") // MODIFIÉ: Romain
-            }
-        };
+        // Nouvel état global (sera chargé depuis Firebase)
+let globalState = null;
+let activePlayerState = null;
+let onModalCloseCallback = null;
+
+// Fonction pour créer l'état par défaut
+function createDefaultState() {
+    return {
+        currentPlayer: null, // 'perla' ou 'romain'
+        currentView: 'login',
+        previousView: 'login',
+        destinMode: false,
+        destinMissionIdToConfirm: null,
+        tempSecretMissionPhoto: null,
+        ongoingMissionId: null,
+        lastAlternancePlayer: 'romain',
+        actionLog: [], 
+        photoGallery: [],
+        sharedMissions: JSON.parse(JSON.stringify(missionTemplates)),
+        players: {
+            perla: createPlayerState("Perla"),
+            romain: createPlayerState("Romain")
+        }
+    };
+}
 
         // L'état actif sur lequel toutes les fonctions vont opérer
         let activePlayerState = null;
@@ -2602,36 +2609,41 @@
   import { enableAutoSave } from './firebase-autosave.js';
 
   // =====================================
-  // RÉCUPÉRATION DE L'ÉTAT GLOBAL
-  // =====================================
-  
-  let globalState = window.globalState || {};
-
-  // =====================================
   // ACTIVATION DE LA SAUVEGARDE AUTO
   // =====================================
   
   console.log('🔧 Activation de la sauvegarde automatique...');
 
-  enableAutoSave(globalState).then(proxiedState => {
+  // Créer l'état par défaut
+  const defaultState = window.createDefaultState();
+
+  enableAutoSave(defaultState).then(proxiedState => {
+    // Assigner l'état chargé depuis Firebase
     window.globalState = proxiedState;
     
+    // Mettre à jour activePlayerState si un joueur est connecté
     if (window.globalState.currentPlayer) {
       window.activePlayerState = window.globalState.players[window.globalState.currentPlayer];
+      console.log(`👤 Joueur actif: ${window.globalState.currentPlayer}`);
     }
     
-    if (typeof window.updateHomeUI === 'function') {
-      window.updateHomeUI();
-    }
+    // Afficher la vue actuelle
+    const currentView = window.globalState.currentView || 'login';
+    window.showView(currentView, false);
     
     console.log('✅ Application prête avec sauvegarde automatique !');
   }).catch(error => {
     console.error('❌ Erreur lors de l\'activation de la sauvegarde:', error);
     alert('⚠️ La sauvegarde automatique n\'a pas pu être activée.');
+    
+    // Fallback : utiliser l'état local
+    window.globalState = defaultState;
+    window.showView('login', false);
   });
 </script>
 </body>
 </html>
+
 
 
 
