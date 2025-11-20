@@ -1096,11 +1096,15 @@ function createDefaultState() {
 
         // MODIFIÉ: Ajout de playNavSound
         function showView(viewId, playNavSound = true) {
-            // NOUVEAU: Mémoriser la vue précédente
-            if (viewId !== globalState.currentView) {
-                globalState.previousView = globalState.currentView;
-            }
-
+    // 🆕 Vérifier que globalState existe
+    if (!globalState) {
+        console.log('⚠️ globalState pas encore initialisé');
+        return;
+    }
+    
+    if (viewId !== globalState.currentView) {
+        globalState.previousView = globalState.currentView;
+    }
             if (!globalState.currentPlayer && viewId !== 'login') {
                 viewId = 'login'; // Forcer le login si personne n'est connecté
             }
@@ -2641,6 +2645,7 @@ function createDefaultState() {
 </script>
 </body>
 </html>
+
 
 
 
